@@ -2,7 +2,7 @@
 
 ## Model Overview
 
-![](https://github.com/limeiwang5050/An-End-to-end-Infant-Brain-Parcellation-Pipeline/blob/main/Picture3-20.png)
+![](https://github.com/limeiwang5050/Knowledge-empowered_Lifespan_Skull_Stripping/blob/main/Picture3-20.png)
 
 This repository contains the code for an end-to-end infant brain parcellation pipeline.
 
