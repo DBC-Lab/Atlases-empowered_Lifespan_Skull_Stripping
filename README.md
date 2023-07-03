@@ -75,7 +75,7 @@ For each MRI, the preprocessing steps include: (1) adjusting the orientation of 
 
 1. Setting the hyper-parameters for the network
 In the ***networks*** folder, our network with standard hyper-parameters for the task of knowledge-empowered lifespan skull stripping can be defined as follows:
-    '''
+    '
     model = Net(
         in_channels=1,
         out_channels=2,
@@ -83,7 +83,7 @@ In the ***networks*** folder, our network with standard hyper-parameters for the
         norm_name='instance',
         conv_block=True,
         dropout_rate=0.0)
-   '''
+   '
 
 The above model is used for brain T1w MR image (1-channel input) and for 2-class outputs, and the network expects resampled input images with the size of (128, 128, 128). 
 2. 
