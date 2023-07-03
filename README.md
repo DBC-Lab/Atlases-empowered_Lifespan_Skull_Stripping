@@ -12,7 +12,7 @@ This model requires only a standard computer with enough RAM to support the oper
 
 ### Software Requirements
 #### OS Requirements
-This model is supported by Linux, which has been tested on *Red Hat Enterprise Linux Server release 8*.
+This model is supported by Linux, which has been tested on ***Red Hat Enterprise Linux Server release 8***.
 
 ## Data and Data preprocessing
 ### Data
