@@ -27,16 +27,25 @@ For each MRI, the preprocessing steps include: (1) adjusting the orientation of 
 ## Training and Testing
 ### File descriptions
 > Brain atlases
->> 10 T1w brain atlases covering 0, 3, 6, 9, 12, 18, 24 months, 3-18 years, 18-64 years, and 65+ years old. 
+
+>> 10 T1w brain atlases covering 0, 3, 6, 9, 12, 18, 24 months, 3-18 years, 18-64 years, and 65+ years old.
+
 >> ***atlas-x.nii.gz***: the brain atlas image at x age.
 
 > Training_subjects
->> The subjects in the folder ***Training_subjects*** are 300 T1w MRIs with corresponding manual labels. 
->> ***subject-x-T1w.nii.gz***: the T1w MRI. 
+
+>> The subjects in the folder ***Training_subjects*** are 300 T1w MRIs with corresponding manual labels.
+
+>> ***subject-x-T1w.nii.gz***: the T1w MRI.
+
 >> ***subejct-x-label.nii.gz***: the manual label.
 
 > Testing_subjects
->> The subjects in the folder ***Testing_subjects*** are 5 representative T1w MRIs at neonate, infant, adolescent, adult, and elder age group.
->> ***subject-x-T1.hdr***: the T1w MRI . 
->> ***subject-x-T2.hdr***: the T2w MRI.  
+
+>> The subjects in the folder ***Testing_subjects*** are 5 representative T1w MRIs at neonate, infant, adolescent, adult, and elder age groups.
+
+>> ***subject-x-T1.hdr***: the T1w MRI.
+
+>> ***subject-x-T2.hdr***: the T2w MRI.
+
 
