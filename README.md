@@ -8,11 +8,22 @@ This repository contains the code for the knowledge-empowered lifespan skull str
 
 ## System Requirements
 ### Hardware Requirements
-This model requires only a standard computer with enough RAM to support the operations defined by a user. For minimal performance, this will be a computer with about 2 GB of RAM. For optimal performance, we recommend a computer with a 16GB or higher memory GPU.
+This model requires only a standard computer with enough RAM to support the operations defined by a user. For optimal performance, we recommend a computer with a 16GB or higher memory GPU.
 
 ### Software Requirements
 #### OS Requirements
 This model is supported by Linux, which has been tested on ***Red Hat Enterprise Linux Server release 8***.
+#### Python Dependencies
+This model mainly depends on the Python scientific stack.
+
+    torch==1.9.1
+    numpy==1.24.3
+    monai==0.7.0
+    nibabel==3.1.1
+    tqdm==4.59.0
+    einops==0.3.0
+    tensorboardX==2.1
+    SimpleITK==2.2.1 
 
 ## Data and Data preprocessing
 ### Data
@@ -60,6 +71,8 @@ For each MRI, the preprocessing steps include: (1) adjusting the orientation of 
 
 >> ***HM-template.hdr***: the template T1w MRI.
 
-###
+### Training
+
+### Testing
 
 
