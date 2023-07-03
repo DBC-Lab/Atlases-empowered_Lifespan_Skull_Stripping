@@ -6,6 +6,10 @@
 
 This repository contains the code for the knowledge-empowered lifespan skull stripping framework. It is designed to perform skull stripping on lifespan subjects from multiple sites by utilizing personalized prior information from atlases. The code presents the complete skull stripping process for T1-weighted MRIs under the guidance of age-specific brain atlases, including the brain extraction module and registration module. The brain extraction module utilizes a brain extraction network to extract the brain parenchyma and generate an initial estimation. In the registration module, an age-specific atlas is registered to the estimated brain, incorporating personalized prior knowledge. The deformation field generated during the registration process is then applied to the corresponding atlas, resulting in the final brain mask.
 
+## System Requirements
+### 
+
+
 ## Data and Data preprocessing
 ### Data
 We selected five representative lifespan subjects' MRIs as demo data, including a neonate subject from the Developing Human Connectome Project (dHCP), an infant subject from National Database for Autism Research (NDAR), an adolescent subject from Autism Brain Imaging Data Exchange (ABIDE), an adult subject from 3R-BRAIN, and an elder subject from Alzheimer’s Disease Neuroimaging Initiative (ADNI).
@@ -46,6 +50,5 @@ For each MRI, the preprocessing steps include: (1) adjusting the orientation of 
 
 >> ***subject-x-T1.hdr***: the T1w MRI.
 
->> ***subject-x-T2.hdr***: the T2w MRI.
 
 
