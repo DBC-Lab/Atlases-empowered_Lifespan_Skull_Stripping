@@ -114,7 +114,7 @@ In the ***main.py***, our initial training setting is as follows:
 
 If you would like to train on your own data, please note that you need to provide the location of your dataset directory by using ***--data_dir*** and specify the training data by using ***--json_list***.
 
-3. Starting training
+3. Running training
 
 Using the following command to perform training:
 
@@ -123,5 +123,28 @@ python3 main.py
 ```
 
 ### Testing
-1. 
+1. Initiating testing
+
+In the ***test.py***, our initial testing setting is as follows:
+
+```
+--infer_overlap=0.5
+--data_dir=
+--json_list=
+--pretrained_dir='./pretrained_models/'
+--pretrained_model_name
+--saved_checkpoint=ckpt
+```
+
+We provide our pre-trained checkpoint for the knowledge-empowered lifespan skull stripping task in the ***/runs/test/*** folder. ***--infer_overlap*** determines the overlap between the sliding window patches. A higher value typically results in more accurate segmentation outputs but with the cost of longer inference time.
+
+If you would like to test on your own data, please note that you also need to provide the location of your dataset directory by using ***--data_dir*** and specify the testing data by using ***--json_list*** and indicate the model by using ***----pretrained_model_name***.
+
+2. Running testing
+
+The following command runs inference using the provided checkpoint:
+
+```
+python test.py
+```
 
