@@ -91,7 +91,30 @@ The above model is used for brain T1w MR image (1-channel input) and for 2-class
 
 2. Initiating training
 
+In the ***main.py***, our initial training setting is as follows:
 
+   ```
+   python main.py
+   --batch_size=1
+   --data_dir=
+   --json_list=
+   --optim_lr=1e-4
+   --lrschedule=warmup_cosine
+   --infer_overlap=0.5
+   --save_checkpoint
+   --data_dir=/dataset/dataset0/
+   --pretrained_dir='./pretrained_models/'
+   --pretrained_model_name='model_best_acc.pth'
+   --resume_ckpt
+   ```
+
+If you would like to train on your own data, please note that you need to provide the location of your dataset directory by using ***--data_dir*** and specify the training data by using ***--json_list***.
+
+3. Starting training
+
+```
+python3 main.py
+```
 
 ### Testing
 
