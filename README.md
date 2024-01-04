@@ -1,4 +1,4 @@
-# Knowledge-empowered_Lifespan_Skull_Stripping
+# Atlases-empowered_Lifespan_Skull_Stripping
 
 ## Model Overview
 
