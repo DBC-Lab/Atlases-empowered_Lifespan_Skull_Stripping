@@ -15,31 +15,24 @@ We selected fifteen representative lifespan subjects' MRIs as demo data in the *
 For each MRI, the preprocessing steps include: (1) adjusting the orientation of the images to a standard reference frame; (2) performing inhomogeneity correction; (3) resampling the image resolution into 2×2×2 mm3; and (4) histogram matching with the template.
 
 ## File descriptions
-> Brain atlases
+> Lifespan_brain_atlases
 
->> 10 T1w brain atlases covering 0, 3, 6, 9, 12, 18, 24 months, 3-18 years, 18-64 years, and 65+ years old.
+>> 10 T1-weighted brain atlases and the corresponding brain masks covering 0, 3, 6, 9, 12, 18, 24 months, 3-18 years, 18-64 years, and 65+ years old in downsample space.
 
->> ***atlas-x.hdr***: the brain atlas image at x age.
-
-> Training_subjects
-
->> The subjects in the folder ***Training_subjects*** are 300 T1w MRIs with corresponding manual labels.
-
->> ***subject-x-T1w.hdr***: the T1w MRI.
-
->> ***subejct-x-label.hdr***: the manual label.
+>> ***brain-atlas-x-downsample.hdr***: the brain atlas image at x age in downsample space.
+>> ***brain-atlas-x-mask-downsample.hdr***: the brain mask of atlas at x age in downsample space.
 
 > Testing_subjects
 
->> The subjects in the folder ***Testing_subjects*** are 5 representative T1w MRIs at neonate, infant, adolescent, adult, and elder age groups.
+>> The folder ***Testing_subjects*** contains 5 subfolders, each of which includes 3 T1-weighted MRIs, covering neonates, infants, adolescents, adults, and elders.
 
 >> ***subject-x-T1.hdr***: the T1w MRI.
 
 > Histogram matching template
 
->> The subjects in the folder ***Histogram matching template*** are the template for histogram matching.
+>> The subjects in the folder ***Template*** are the template for histogram matching.
 
->> ***HM-template.hdr***: the template T1w MRI.
+>> ***template.hdr***: the template T1w MRI.
 
 
 ## Training and Testing
