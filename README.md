@@ -20,6 +20,7 @@ For each MRI, the preprocessing steps include: (1) adjusting the orientation of 
 >> 10 T1-weighted brain atlases and the corresponding brain masks covering 0, 3, 6, 9, 12, 18, 24 months, 3-18 years, 18-64 years, and 65+ years old in downsample space.
 
 >> ***brain-atlas-x-downsample.hdr***: the brain atlas image at x age in downsample space.
+
 >> ***brain-atlas-x-mask-downsample.hdr***: the brain mask of atlas at x age in downsample space.
 
 > Testing_subjects
