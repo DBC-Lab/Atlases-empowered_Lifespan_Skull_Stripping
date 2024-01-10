@@ -8,17 +8,7 @@ This repository contains the code for the knowledge-empowered lifespan skull str
 
 ## Data and Data preprocessing
 ### Data
-We selected five representative lifespan subjects' MRIs as demo data, including a neonate subject from the Developing Human Connectome Project (dHCP), an infant subject from National Database for Autism Research (NDAR), an adolescent subject from Autism Brain Imaging Data Exchange (ABIDE), an adult subject from 3R-BRAIN, and an elder subject from Alzheimer’s Disease Neuroimaging Initiative (ADNI).
-
-    dHCP: Philips scanner (<http://www.developingconnectome.org/>)
-    
-    NDAR: Siemens scanner (<https://nda.nih.gov/edit collection.html?id=19>)
-    
-    ABIDE: Philips scanner (<https://fcon 1000.projects.nitrc.org/indi/abide/>)
-    
-    3R-BRAIN: GE scanner (<http://deepneuro.bnu.edu.cn/?p=163>)
-    
-    ADNI: Siemens scanner (<https://ida.loni.usc.edu/login.jsp>)
+We selected five representative lifespan subjects' MRIs as demo data in the ***./Testing_subjects/***, including 3 neonate subjects' scans obtained by Philips scanner, 3 infant subjects' scans obtained by Siemens scanner, 3 adolescent subjects' scans obtained by Philips scanner, 3 adult subjects' scans obtained by GE scanner, and 3 elder subjects' scans obtained by Siemens scanner.
     
 
 ### Data preprocessing
