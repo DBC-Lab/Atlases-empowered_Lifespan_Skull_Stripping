@@ -8,7 +8,7 @@ This repository contains the code for the knowledge-empowered lifespan skull str
 
 ## Data and Data preprocessing
 ### Data
-We selected five representative lifespan subjects' MRIs as demo data in the ***./Testing_subjects/***, including 3 neonate subjects' scans obtained by Philips scanner, 3 infant subjects' scans obtained by Siemens scanner, 3 adolescent subjects' scans obtained by Philips scanner, 3 adult subjects' scans obtained by GE scanner, and 3 elder subjects' scans obtained by Siemens scanner.
+We selected fifteen representative lifespan subjects' MRIs as demo data in the ***'./Testing_subjects/'***, including 3 neonate subjects' scans obtained by Philips scanner, 3 infant subjects' scans obtained by Siemens scanner, 3 adolescent subjects' scans obtained by Philips scanner, 3 adult subjects' scans obtained by GE scanner, and 3 elder subjects' scans obtained by Siemens scanner.
     
 
 ### Data preprocessing
