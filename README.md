@@ -12,7 +12,7 @@ We selected fifteen representative lifespan subjects' MRIs as demo data in the *
     
 
 ### Data preprocessing
-For each MRI, the preprocessing steps include:  (1) adjusting the orientation of the images to a standard reference frame; (2) performing inhomogeneity correction (10.1109/TMI.2010.2046908); (3) resampling the image resolution into 2×2×2 mm3; (4) normalizing the intensity range across subjects to the same scale; and (5) rigidly moving the center of the brain part (based on ground-truth masks for training subjects or the estimated Ib for testing subjects) to ensure a consistent position across subjects and facilitate the registration.
+For each MRI, the preprocessing steps include:  (1) adjusting the orientation of the images to a standard reference frame; (2) performing inhomogeneity correction (10.1109/TMI.2010.2046908); (3) resampling the image resolution into 2×2×2 mm3; (4) normalizing the intensity range across subjects to the same scale; and (5) rigidly moving the center of the brain part (based on ground-truth masks for training subjects or the estimated brain for testing subjects) to ensure a consistent position across subjects and facilitate the registration.
 
 
 ## File descriptions
