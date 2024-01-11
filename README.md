@@ -128,3 +128,6 @@ python testing.py --input_path  --output_path --stage --age_month
 ```
 In this command, ***--input_path*** specifies the path to the testing data, ***--output_path*** indicates where the skull stripping results will be saved, ***--stage*** identifies the life stage of the test data (options include Neonate, Infant, Adolescent, Adult, Elder), and ***--age_month*** is used to define the precise age in months for cases when the ***--stage*** is Neonate or Infant (options are 0m, 3m, 6m, 9m, 12m, 18m, 24m).
 
+The demo testing subjects are located in the ***/Testing_subjects/*** folder, along with their corresponding --stage information. For subjects in the Neonate folder, the ***--age_month*** is set to 0m, while for those in the Infant folder, the ***--age_month*** is set to 24m.
+
+
