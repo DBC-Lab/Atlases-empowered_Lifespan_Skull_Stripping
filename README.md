@@ -120,7 +120,7 @@ In the ***test.py***, our initial testing setting is as follows:
 --pretrained_model_name
 --saved_checkpoint=ckpt
 ```
-We have provided our pre-trained model, which can be downloaded from this link: https://www.dropbox.com/scl/fo/3f9o9sgls4e88jved8ooo/h?rlkey=h46zb5ulwbacrbh8vtsjwygn0&dl=0
+We have provided our pre-trained model (Lifespan_Skull_Stripping.pt), which can be downloaded from this link: https://www.dropbox.com/scl/fo/3f9o9sgls4e88jved8ooo/h?rlkey=h46zb5ulwbacrbh8vtsjwygn0&dl=0
 
 We provide our pre-trained checkpoint for the knowledge-empowered lifespan skull stripping task in the ***/runs/test/*** folder. ***--infer_overlap*** determines the overlap between the sliding window patches. A higher value typically results in more accurate segmentation outputs but with the cost of longer inference time.
 
