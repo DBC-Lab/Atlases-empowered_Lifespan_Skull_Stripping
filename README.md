@@ -8,7 +8,7 @@ This repository contains the code for the knowledge-empowered lifespan skull str
 
 ## Data and Data preprocessing
 ### Data
-We selected fifteen representative lifespan subjects' MRIs as demo data in the ***'./Testing_subjects/'***, including 3 neonate subjects' scans obtained by Philips scanner, 3 infant subjects' scans obtained by Siemens scanner, 3 adolescent subjects' scans obtained by Philips scanner, 3 adult subjects' scans obtained by GE scanner, and 3 elder subjects' scans obtained by Siemens scanner.
+We selected fifteen representative lifespan subjects' MRIs as demo data in the ***'./Testing_subjects/'***, including 3 neonate subjects' scans, 3 infant subjects' scans, 3 adolescent subjects' scans, 3 adult subjects' scans, and 3 elder subjects' scans obtained from different scanners/protocols.
     
 
 ### Data preprocessing
@@ -28,7 +28,7 @@ For each MRI, the preprocessing steps include:  (1) adjusting the orientation of
 
 >> The folder ***Testing_subjects*** contains 5 subfolders, each of which includes 3 T1-weighted MRIs, covering neonates, infants, adolescents, adults, and elders.
 
->> ***subject-x-T1.hdr***: the T1w MRI.
+>> ***subject-x-T1w.hdr***: the T1w MRI.
 
 > Histogram matching template
 
@@ -58,8 +58,6 @@ This model mainly depends on the Python scientific stack.
     SimpleITK==2.2.1 
 
 
-
-
 ### Training
 
 1. Setting the hyper-parameters for the network
@@ -71,12 +69,11 @@ In the ***networks*** folder, our network with standard hyper-parameters for the
         in_channels=1,
         out_channels=2,
         img_size=(128, 128, 128),
-        norm_name='instance',
         conv_block=True,
         dropout_rate=0.0)
    ```
    
-The above model is used for brain T1w MR image (1-channel input) and for 2-class outputs, and the network expects resampled input images with the size of (128, 128, 128). 
+The above model is used for brain T1w MR image (1-channel input) and for 2-class outputs, and the network expects resampled input images with the size of (128, 128, 128) and the resolution of (2, 2, 2). 
 
 2. Initiating training
 
@@ -101,7 +98,7 @@ If you would like to train on your own data, please note that you need to provid
 
 3. Running training
 
-Using the following command to perform training:
+You can initiate the training process by executing the following command:
 
 ```
 python3 main.py
@@ -110,27 +107,24 @@ python3 main.py
 ### Testing
 1. Initiating testing
 
-In the ***test.py***, our initial testing setting is as follows:
+In the ***testing.py***, our initial testing setting is as follows:
 
 ```
---infer_overlap=0.5
 --data_dir=
---json_list=
---pretrained_dir='./pretrained_models/'
+--pretrained_dir='./Model/'
 --pretrained_model_name
 --saved_checkpoint=ckpt
 ```
 We have provided our pre-trained model (Lifespan_Skull_Stripping.pt), which can be downloaded from this link: https://www.dropbox.com/scl/fo/3f9o9sgls4e88jved8ooo/h?rlkey=h46zb5ulwbacrbh8vtsjwygn0&dl=0
 
-We provide our pre-trained checkpoint for the knowledge-empowered lifespan skull stripping task in the ***/runs/test/*** folder. ***--infer_overlap*** determines the overlap between the sliding window patches. A higher value typically results in more accurate segmentation outputs but with the cost of longer inference time.
-
-If you would like to test on your own data, please note that you also need to provide the location of your dataset directory by using ***--data_dir*** and specify the testing data by using ***--json_list*** and indicate the model by using ***----pretrained_model_name***.
+After downloading the model, it should be placed in ***/Model/*** folder for convenient subsequent testing.
 
 2. Running testing
 
-The following command runs inference using the provided checkpoint:
+You can run inference using the provided checkpoint by executing the following command:
 
 ```
-python test.py
+python testing.py --input_path  --output_path --stage --age_month
 ```
+In this command, ***--input_path*** specifies the path to the testing data, ***--output_path*** indicates where the skull stripping results will be saved, ***--stage*** identifies the life stage of the test data (options include Neonate, Infant, Adolescent, Adult, Elder), and ***--age_month*** is used to define the precise age in months for cases when the ***--stage*** is Neonate or Infant (options are 0m, 3m, 6m, 9m, 12m, 18m, 24m).
 
