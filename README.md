@@ -103,7 +103,7 @@ After the preprocessing step, the images are resized to a uniform size of 128 ×
 
 ## Training Instruction
 
-### 1. Setting the hyper-parameters for the network
+### 1. Setting Hyper-parameters
 
 In the ***networks*** folder, our network with standard hyper-parameters for the task of knowledge-empowered lifespan skull stripping can be defined as follows:
 
@@ -117,7 +117,7 @@ In the ***networks*** folder, our network with standard hyper-parameters for the
    
 The above model is used for brain T1w MR image (1-channel input) and for 2-class outputs, and the network expects resampled input images with the size of (128, 128, 128) and the resolution of (2, 2, 2). 
 
-### 2. Initiating training
+### 2. Initiating Training
 
 In the ***main.py***, our initial training setting is as follows:
 
@@ -133,7 +133,7 @@ In the ***main.py***, our initial training setting is as follows:
 
 If you would like to train on your own data, please note that you need to provide the location of your dataset directory by using ***--data_dir*** and specify the training data by using ***--json_list***.
 
-3. Running training
+### 3. Running Training
 
 You can initiate the training process by executing the following command:
 
