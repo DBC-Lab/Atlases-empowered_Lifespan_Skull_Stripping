@@ -82,7 +82,7 @@ We have provided 5 example adult T1-weighted MRimages in the ***'./Testing_subje
 
 We have provided our pre-trained model (Lifespan_Skull_Stripping.pt), which can be downloaded from this link: https://www.dropbox.com/scl/fo/3f9o9sgls4e88jved8ooo/h?rlkey=h46zb5ulwbacrbh8vtsjwygn0&dl=0
 
-After downloading the model, it should be placed in ***/Model/*** folder for convenient subsequent testing.
+After downloading the model, it should be placed in ***./Model/*** folder for convenient subsequent testing.
 
 
 ### 3. Testing Tutorial
