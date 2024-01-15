@@ -101,7 +101,7 @@ After the preprocessing step, the images are resized to a uniform size of 128 ×
 
 
 
-## Testing Instruction
+## Training Instruction
 
 ### 1. Setting the hyper-parameters for the network
 
