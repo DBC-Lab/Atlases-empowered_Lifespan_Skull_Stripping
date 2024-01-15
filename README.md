@@ -8,17 +8,11 @@ This repository contains the code for the knowledge-empowered lifespan skull str
 
 Note: The current model is suitable for lifespan subjects from birth to old age, with minor tissue deformities. We are now working on incorporating fetal subjects and pathological cases into our training dataset. Please stay tuned.
 
-## Data and Data preprocessing
-### Data
-We selected fifteen representative lifespan subjects' MRIs as demo data in the ***'./Testing_subjects/'***, including 3 neonate subjects' scans, 3 infant subjects' scans, 3 adolescent subjects' scans, 3 adult subjects' scans, and 3 elder subjects' scans obtained from different scanners/protocols.
-    
-
-### Data preprocessing
-For each MRI, the preprocessing steps include:  (1) adjusting the orientation of the images to a standard reference frame; (2) performing inhomogeneity correction (10.1109/TMI.2010.2046908); (3) resampling the image resolution into 2×2×2 mm3; (4) normalizing the intensity range across subjects to the same scale; and (5) rigidly moving the center of the brain part (based on ground-truth masks for training subjects or the estimated brain for testing subjects) to ensure a consistent position across subjects and facilitate the registration.
 
 
-## File descriptions
-> Lifespan_brain_atlases:
+
+## File Descriptions
+### Lifespan_brain_atlases:
 > 
 > We employ dense atlases at 0, 3, 6, 9, 12, 18, 24 months of age, which were built from UNC/UMN baby connectome project [1]. For the later age, we employ three sparse atlases, including an adolescent brain atlas covering 3-18 years old from [2], an adult brain atlas covering 19-64 years old from [3], an elderly brain atlas covering 65+ years old from [4].
 >> [1]. Chen, L., Wu, Z., Hu, D., Wang, Y., Zhao, F., Zhong, T., Lin, W., Wang, L., Li, G.: A 4d infant brain volumetric atlas based on the unc/umn baby connectome project (bcp) cohort. Neuroimage 253, 119097 (2022)
@@ -33,21 +27,27 @@ For each MRI, the preprocessing steps include:  (1) adjusting the orientation of
 >> ***brain-atlas-x-mask-downsample.hdr***: the brain mask of atlas at x age in downsample space.
 
 
-> Testing_subjects
+### Testing_subjects: 
 
->> The folder ***Testing_subjects*** contains 5 subfolders, each of which includes 3 T1-weighted MRIs, covering neonates, infants, adolescents, adults, and elders.
+>> This folder contains 5 example T1-weighted MR images from open SynthStrip dataset [5] for downloading and testing.
+>>
+>> [5]. Hoopes, A., Mora, J. S., Dalca, A. V., Fischl, B., & Hoffmann, M.: SynthStrip: Skull-stripping for any brain image. NeuroImage, 260, 119474 (2022)
 
 >> ***subject-x-T1w.hdr***: the T1w MRI.
 
-> Histogram matching template
+
+### Histogram Matching Template:  
 
 >> The subjects in the folder ***Template*** are the template for histogram matching.
 
->> ***template.hdr***: the template T1w MRI.
+>> ***template.hdr***: the template T1-weighted MRI.
 
 
-## Training and Testing
-### System Requirements
+
+
+## Testing Instruction
+
+### 1. System Requirements
 #### Hardware Requirements
 This model requires only a standard computer with enough RAM to support the operations defined by a user. For optimal performance, we recommend a computer with a 16GB or higher memory GPU.
 
@@ -66,10 +66,44 @@ This model mainly depends on the Python scientific stack.
     tensorboardX==2.1
     SimpleITK==2.2.1 
 
+You can use the following command to install all dependencies.
 
-### Training
+```
+pip3 install -r requirements.txt
+```
 
-1. Setting the hyper-parameters for the network
+### 2. Data and Model
+
+#### Data Preparation
+
+We have provided 5 example adult T1-weighted MRimages in the ***'./Testing_subjects/'*** folder. These images are sourced from the SynthStrip dataset [5]. The age of the subjects in months at the time of image acquisition is integrated into the filenames of the images. If you want to test your own data located in different folders, you can use the ***--input_path*** argument to modify the input path. Note all imaging data was stored in the Analyze 7.5 file format, comprising of ***'.hdr'*** and ***'.img'*** files. 
+
+#### Model Preparation
+
+We have provided our pre-trained model (Lifespan_Skull_Stripping.pt), which can be downloaded from this link: https://www.dropbox.com/scl/fo/3f9o9sgls4e88jved8ooo/h?rlkey=h46zb5ulwbacrbh8vtsjwygn0&dl=0
+
+After downloading the model, it should be placed in ***/Model/*** folder for convenient subsequent testing.
+
+
+### 3. Testing Tutorial
+
+You can achieve skull stripping on brain MRIs using the provided checkpoint by executing the following command:
+
+```
+python testing.py --input_path  --output_path --age_in_month
+```
+
+In this command, ***--input_path*** specifies the folder to the testing data (the default is ***'Testing_subjects'***). The ***--output_path*** indicates where the skull stripping results will be saved (with ***'Testing_subjects'*** as the default location). Additionally, the ***--stage*** option is utilized to specify the exact age in months of the test subjects. Based on the provided age information, our testing procedure will select the most appropriate brain atlas for testing. 
+
+For each provided T1-weighted MR image, our testing procedure initially rotates the image to the RAI (Right-Anterior-Inferior) orientation. Subsequently, it conducts inhomogeneity correction (10.1109/TMI.2010.2046908). If your testing dataset already includes images with corrected inhomogeneity, you can utilize the option ***--N4=Flase*** to bypass this step, which can help save processing time.
+
+After the preprocessing step, the images are resized to a uniform size of 128 × 128 × 128, with a resolution of 2×2×2 mm³, and then rescaled to the same range. Following this, the testing procedure utilizes the trained model to perform skull stripping and then saves the final brain mask, resampled to the input image size, in the output path ***--output_path***.
+
+
+
+## Testing Instruction
+
+### 1. Setting the hyper-parameters for the network
 
 In the ***networks*** folder, our network with standard hyper-parameters for the task of knowledge-empowered lifespan skull stripping can be defined as follows:
 
@@ -78,29 +112,23 @@ In the ***networks*** folder, our network with standard hyper-parameters for the
         in_channels=1,
         out_channels=2,
         img_size=(128, 128, 128),
-        conv_block=True,
-        dropout_rate=0.0)
+        conv_block=True)
    ```
    
 The above model is used for brain T1w MR image (1-channel input) and for 2-class outputs, and the network expects resampled input images with the size of (128, 128, 128) and the resolution of (2, 2, 2). 
 
-2. Initiating training
+### 2. Initiating training
 
 In the ***main.py***, our initial training setting is as follows:
 
    ```
    python main.py
    --batch_size=1
-   --data_dir=
-   --json_list=
+   --data_dir='./Training_data/' 
+   --json_list='./datasets/Training_data.json'
    --optim_lr=1e-4
    --lrschedule=warmup_cosine
-   --infer_overlap=0.5
-   --save_checkpoint
-   --data_dir=/dataset/dataset0/
-   --pretrained_dir='./pretrained_models/'
-   --pretrained_model_name='model_best_acc.pth'
-   --resume_ckpt
+   --infer_overlap=0.8
    ```
 
 If you would like to train on your own data, please note that you need to provide the location of your dataset directory by using ***--data_dir*** and specify the training data by using ***--json_list***.
@@ -113,30 +141,5 @@ You can initiate the training process by executing the following command:
 python3 main.py
 ```
 
-### Testing
-1. Initiating testing
-
-In the ***testing.py***, our initial testing setting is as follows:
-
-```
---data_dir=
---pretrained_dir='./Model/'
---pretrained_model_name
---saved_checkpoint=ckpt
-```
-We have provided our pre-trained model (Lifespan_Skull_Stripping.pt), which can be downloaded from this link: https://www.dropbox.com/scl/fo/3f9o9sgls4e88jved8ooo/h?rlkey=h46zb5ulwbacrbh8vtsjwygn0&dl=0
-
-After downloading the model, it should be placed in ***/Model/*** folder for convenient subsequent testing.
-
-2. Running testing
-
-You can run inference using the provided checkpoint by executing the following command:
-
-```
-python testing.py --input_path  --output_path --stage --age_month
-```
-In this command, ***--input_path*** specifies the path to the testing data, ***--output_path*** indicates where the skull stripping results will be saved, ***--stage*** identifies the life stage of the test data (options include Neonate, Infant, Adolescent, Adult, Elder), and ***--age_month*** is used to define the precise age in months for cases when the ***--stage*** is Neonate or Infant (options are 0, 3, 6, 9, 12, 18, 24).
-
-The demo testing subjects are located in the ***/Testing_subjects/*** folder, along with their corresponding --stage information. For subjects in the Neonate folder, the ***--age_month*** is set to 0, while for those in the Infant folder, the ***--age_month*** is set to 24.
 
 
