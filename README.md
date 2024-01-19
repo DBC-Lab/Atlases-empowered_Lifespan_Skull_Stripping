@@ -8,7 +8,7 @@ This repository contains the code for the knowledge-empowered lifespan skull str
 
 Note: The current model is suitable for lifespan subjects from birth to old age, with minor tissue deformities. We are now working on incorporating fetal subjects and pathological cases into our training dataset. Please stay tuned.
 
-Update: We are packaging all training/testing materials for reproduction and will make them available here very soon.
+## Update: We are packaging all training/testing materials for reproduction and will make them available here very soon.
 
 
 
