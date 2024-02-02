@@ -141,6 +141,7 @@ You can initiate the training process by executing the following command:
 ```
 python3 main.py
 ```
-
+Demos on skull stripping of T2w MRIs
+![Atlases-empowered_Lifespan_Skull_Stripping_T2W](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/assets/110405481/a06754bc-d525-4873-bae1-56792aae75cd)
 
 
