@@ -8,6 +8,10 @@ This repository contains the code for the knowledge-empowered lifespan skull str
 
 Note: The current model is suitable for lifespan subjects from birth to old age, with minor tissue deformities. We are now working on incorporating fetal subjects and pathological cases into our training dataset. Please stay tuned.
 
+## Update: Our single model can handle T1w/T2w MRIs. Here are demos of skull stripping results from lifespan T2w MRIs:
+![Atlases-empowered_Lifespan_Skull_Stripping_T2W](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/assets/110405481/a06754bc-d525-4873-bae1-56792aae75cd)
+
+
 ## Update: We are packaging all training/testing materials for reproduction and will make them available here very soon.
 
 
@@ -141,7 +145,5 @@ You can initiate the training process by executing the following command:
 ```
 python3 main.py
 ```
-Demos on skull stripping of T2w MRIs
-![Atlases-empowered_Lifespan_Skull_Stripping_T2W](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/assets/110405481/a06754bc-d525-4873-bae1-56792aae75cd)
 
 
