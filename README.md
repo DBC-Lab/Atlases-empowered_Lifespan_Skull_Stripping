@@ -15,7 +15,7 @@ Note: The current model is suitable for lifespan subjects from birth to old age,
 ## Update: We are packaging all training/testing materials for reproduction and will make them available here very soon.
 
 | Age group | Data source | Number | Format |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | 0 month | [Developing Human Connectome Project (dHCP)](http://www.developingconnectome.org/) | 6 | .nii.gz |
 |  | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) | 24| .nii.gz |
 | 3 months | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) | 30 | .nii.gz |
