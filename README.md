@@ -14,10 +14,20 @@ Note: The current model is suitable for lifespan subjects from birth to old age,
 
 ## Update: We are packaging all training/testing materials for reproduction and will make them available here very soon.
 
-| Age group | dataset |
+| Age group | Data source | 
 | --- | --- |
-| git status | List all new or modified files |
-| git diff | Show file differences that haven't been staged |
+| 0 month | Developing Human Connectome Project (dHCP) |
+|  | Baby Connectome Project (BCP) |
+| 3 months | Baby Connectome Project (BCP) |
+| 6 months | Baby Connectome Project (BCP) |
+| 9 months | Baby Connectome Project (BCP) |
+| 12 months | Baby Connectome Project (BCP) |
+| 18 months | Baby Connectome Project (BCP) |
+| 24 months | Baby Connectome Project (BCP) |
+| Adolescent | Baby Connectome Project (BCP) |
+|  | Autism Brain Imaging Data Exchange (ABIDE) |
+| Adult | International Consortium for Brain Mapping (ICBM) |
+| Elder | Alzheimer’s Disease Neuroimaging Initiative (ADNI) |
 
 ## File Descriptions
 ### Lifespan_brain_atlases:
