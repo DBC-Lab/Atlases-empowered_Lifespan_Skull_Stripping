@@ -25,7 +25,7 @@ Note: The current model is suitable for lifespan subjects from birth to old age,
 | 18 months | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) |
 | 24 months | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) |
 | Adolescent | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) |
-|  | [Autism Brain Imaging Data Exchange (ABIDE)(https://fcon_1000.projects.nitrc.org/indi/abide/) |
+|  | [Autism Brain Imaging Data Exchange (ABIDE)](https://fcon_1000.projects.nitrc.org/indi/abide/) |
 | Adult | [International Consortium for Brain Mapping (ICBM)](https://ida.loni.usc.edu/login.jsp) |
 | Elder | [Alzheimer’s Disease Neuroimaging Initiative (ADNI)](https://ida.loni.usc.edu) |
 
