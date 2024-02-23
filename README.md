@@ -12,7 +12,24 @@ Note: The current model is suitable for lifespan subjects from birth to old age,
 ![Atlases-empowered_Lifespan_Skull_Stripping_T2W](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/assets/110405481/a06754bc-d525-4873-bae1-56792aae75cd)
 
 
-## Update: We are packaging all training/testing materials for reproduction and will make them available here very soon.
+
+## File Descriptions
+### Lifespan_brain_atlases:
+> 
+> We employ dense atlases at 0, 3, 6, 9, 12, 18, 24 months of age, which were built from UNC/UMN baby connectome project [1]. For the later age, we employ three sparse atlases, including an adolescent brain atlas covering 3-18 years old from [2], an adult brain atlas covering 19-64 years old from [3], an elderly brain atlas covering 65+ years old from [4].
+>> [1]. Chen, L., Wu, Z., Hu, D., Wang, Y., Zhao, F., Zhong, T., Lin, W., Wang, L., Li, G.: A 4d infant brain volumetric atlas based on the unc/umn baby connectome project (bcp) cohort. Neuroimage 253, 119097 (2022)
+>> [2]. Fonov, V., Evans, A.C., Botteron, K., Almli, C.R., McKinstry, R.C., Collins, D.L., Group, B.D.C.: Unbiased average age-appropriate atlases for pediatric studies. Neuroimage 54(1), 313–327 (2011)
+>> [3]. Rohlfing, T., Zahr, N.M., Sullivan, E.V., Pfefferbaum, A.: The sri24 multichannel atlas of normal adult human brain structure. Human brain mapping 31(5), 798–819 (2010)
+>> [4]. Wu, Y., Ridwan, A.R., Niaz, M.R., Qi, X., Zhang, S., Bennett, D.A., Arfanakis, K., Initiative, A.D.N.: Development of high quality t1-weighted and diffusion tensor templates of the older adult brain in a common space. NeuroImage 260, 119417 (2022)
+
+>> 10 T1-weighted brain atlases and the corresponding brain masks covering 0, 3, 6, 9, 12, 18, 24 months, 3-18 years, 18-64 years, and 65+ years old in downsample space.
+
+>> ***brain-atlas-x-downsample.hdr***: the brain atlas image at x age in downsample space.
+
+>> ***brain-atlas-x-mask-downsample.hdr***: the brain mask of atlas at x age in downsample space.
+
+
+### Training_subjects: 
 
 | Age group | Data source | Number | Format |
 | --- | --- | --- | --- |
@@ -29,20 +46,6 @@ Note: The current model is suitable for lifespan subjects from birth to old age,
 | Adult | [International Consortium for Brain Mapping (ICBM)](https://ida.loni.usc.edu/login.jsp) | 30 | .nii.gz |
 | Elder | [Alzheimer’s Disease Neuroimaging Initiative (ADNI)](https://ida.loni.usc.edu) | 30 | .nii.gz |
 
-## File Descriptions
-### Lifespan_brain_atlases:
-> 
-> We employ dense atlases at 0, 3, 6, 9, 12, 18, 24 months of age, which were built from UNC/UMN baby connectome project [1]. For the later age, we employ three sparse atlases, including an adolescent brain atlas covering 3-18 years old from [2], an adult brain atlas covering 19-64 years old from [3], an elderly brain atlas covering 65+ years old from [4].
->> [1]. Chen, L., Wu, Z., Hu, D., Wang, Y., Zhao, F., Zhong, T., Lin, W., Wang, L., Li, G.: A 4d infant brain volumetric atlas based on the unc/umn baby connectome project (bcp) cohort. Neuroimage 253, 119097 (2022)
->> [2]. Fonov, V., Evans, A.C., Botteron, K., Almli, C.R., McKinstry, R.C., Collins, D.L., Group, B.D.C.: Unbiased average age-appropriate atlases for pediatric studies. Neuroimage 54(1), 313–327 (2011)
->> [3]. Rohlfing, T., Zahr, N.M., Sullivan, E.V., Pfefferbaum, A.: The sri24 multichannel atlas of normal adult human brain structure. Human brain mapping 31(5), 798–819 (2010)
->> [4]. Wu, Y., Ridwan, A.R., Niaz, M.R., Qi, X., Zhang, S., Bennett, D.A., Arfanakis, K., Initiative, A.D.N.: Development of high quality t1-weighted and diffusion tensor templates of the older adult brain in a common space. NeuroImage 260, 119417 (2022)
-
->> 10 T1-weighted brain atlases and the corresponding brain masks covering 0, 3, 6, 9, 12, 18, 24 months, 3-18 years, 18-64 years, and 65+ years old in downsample space.
-
->> ***brain-atlas-x-downsample.hdr***: the brain atlas image at x age in downsample space.
-
->> ***brain-atlas-x-mask-downsample.hdr***: the brain mask of atlas at x age in downsample space.
 
 
 ### Testing_subjects: 
