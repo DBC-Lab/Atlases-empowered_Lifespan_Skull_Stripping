@@ -33,6 +33,11 @@ This folder contains 10 sub-folders (*0month, 3months, 6months, 9months, 12month
 | Adult | [International Consortium for Brain Mapping (ICBM)](https://ida.loni.usc.edu/login.jsp) | 30 | .nii.gz |
 | Elder | [Alzheimer’s Disease Neuroimaging Initiative (ADNI)](https://ida.loni.usc.edu) | 30 | .nii.gz |
 
+> [!NOTE]
+> The raw data downloaded from each data source needs the following steps to be matched with the provided brainmask:
+> (1) Converting to the required format;
+> (2) Reorienting MRI data to the RAI (Right-Anterior-Inferior) orientation;
+> (3) Resampling the reorientated MRI data to the size of 256*256*256 with the resolution of 1*1*1.
 
 
 ### Testing_subjects: 
