@@ -14,7 +14,10 @@ Note: The current model is suitable for lifespan subjects from birth to old age,
 
 ## Update: We are packaging all training/testing materials for reproduction and will make them available here very soon.
 
-
+| Age group | dataset |
+| --- | --- |
+| git status | List all new or modified files |
+| git diff | Show file differences that haven't been staged |
 
 ## File Descriptions
 ### Lifespan_brain_atlases:
