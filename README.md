@@ -16,6 +16,7 @@ Note: The current model is suitable for lifespan subjects from birth to old age,
 ## File Descriptions
 
 ### Training_subjects: 
+This folder contains 10 sub-folders (*0month, 3months, 6months, 9months, 12months, 18months, 24months, Adolescent, Adult, Elder*), with each sub-folder containing 30 training data. The data sources have been summarized in the table below.
 
 | Age group | Data source | Number | Format |
 | --- | --- | --- | --- |
