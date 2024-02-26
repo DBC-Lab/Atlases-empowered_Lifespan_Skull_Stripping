@@ -21,7 +21,7 @@ This folder contains 10 sub-folders (*0month, 3months, 6months, 9months, 12month
 | Age group | Data source | Number | Format |
 | --- | --- | --- | --- |
 | 0 month | [Developing Human Connectome Project (dHCP)](http://www.developingconnectome.org/) | 6 | .nii.gz |
-|  | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) | 24| .nii.gz |
+| 0 month | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) | 24| .nii.gz |
 | 3 months | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) | 30 | .nii.gz |
 | 6 months | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) | 30 | .nii.gz |
 | 9 months | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) | 30 | .nii.gz |
@@ -29,7 +29,7 @@ This folder contains 10 sub-folders (*0month, 3months, 6months, 9months, 12month
 | 18 months | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) | 30 | .nii.gz |
 | 24 months | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) | 30 | .nii.gz |
 | Adolescent | [Baby Connectome Project (BCP)](https://nda.nih.gov/edit_collection.html?id=2848/) | 12 | .nii.gz |
-|  | [Autism Brain Imaging Data Exchange (ABIDE)](https://fcon_1000.projects.nitrc.org/indi/abide/) | 18 | .nii.gz |
+| Adolescent | [Autism Brain Imaging Data Exchange (ABIDE)](https://fcon_1000.projects.nitrc.org/indi/abide/) | 18 | .nii.gz |
 | Adult | [International Consortium for Brain Mapping (ICBM)](https://ida.loni.usc.edu/login.jsp) | 30 | .nii.gz |
 | Elder | [Alzheimer’s Disease Neuroimaging Initiative (ADNI)](https://ida.loni.usc.edu) | 30 | .nii.gz |
 
