@@ -34,7 +34,7 @@ This folder contains 10 sub-folders (*0month, 3months, 6months, 9months, 12month
 | Elder | [Alzheimer’s Disease Neuroimaging Initiative (ADNI)](https://ida.loni.usc.edu) | 30 | .nii.gz |
 
 > [!NOTE]
-> Since we do not have the rights to share the raw data, users may have to download from the above links in the table and perform the following steps to be matched with the provided brain masks:
+> Since we do not have the rights to share the raw data, users may have to download the raw data from the above links in the table and perform the following steps to match the provided brain masks:
 > (1) Converting to the required format;
 > (2) Reorienting MRI data to the RAI (Right-Anterior-Inferior) orientation;
 > (3) Resampling the reorientated MRI data to the size of 256\*256\*256 with the resolution of 1\*1\*1.
