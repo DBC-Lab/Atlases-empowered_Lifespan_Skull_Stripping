@@ -50,7 +50,7 @@ We will gradually update the manual labels of the large-scale dataset consisting
 | 0-72 months | [Multi-visit Advanced Pediatric (MAP)](https://circlelab.unc.edu/studies/completed-data-collection/multi-visit-advanced-pediatric-brain-imaging-map/) | 265| .nii.gz |
 | 18-30 years | [Chinese Color Nest Project (CCNP)](https://ccnp.scidb.cn/en) | 211 | .nii.gz |
 | 62-90 years | [Aging Brain: Vasculature, Ischemia, and Behavior (ABVIB)](https://nda.nih.gov/edit_collection.html?id=2848/) | 228 | .nii.gz |
-| 17-27 years | Southwest University Longitudinal Imaging Multimodal (SLIM) Brain Data Repository](http://fcon 1000.projects.nitrc.org/indi/retro/southwestuni qiu index.html) | 572 | .nii.gz |
+| 17-27 years | [Southwest University Longitudinal Imaging Multimodal (SLIM) Brain Data Repository](http://fcon 1000.projects.nitrc.org/indi/retro/southwestuni qiu index.html) | 572 | .nii.gz |
 |  | To be continue |  | |
 
 > [!NOTE]
