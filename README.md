@@ -42,12 +42,23 @@ This folder contains 10 sub-folders (*0month, 3months, 6months, 9months, 12month
 
 ### Testing_subjects: 
 
->> This folder contains 5 example T1-weighted MR images from open SynthStrip dataset [5] for downloading and testing.
->>
->> [5]. Hoopes, A., Mora, J. S., Dalca, A. V., Fischl, B., & Hoffmann, M.: SynthStrip: Skull-stripping for any brain image. NeuroImage, 260, 119474 (2022)
+We will gradually update the manual labels of the large-scale dataset consisting of 18 datasets in this folder. The data information has been summarized in the table below.
 
->> ***subject-x-T1w.hdr***: the T1w MRI.
+| Age group | Data source | Number | Format |
+| --- | --- | --- | --- |
+| 24-45 days | [Developing Human Connectome Project (dHCP)](http://www.developingconnectome.org/) | 375 | .nii.gz |
+| 0-72 months | [Multi-visit Advanced Pediatric (MAP)](https://circlelab.unc.edu/studies/completed-data-collection/multi-visit-advanced-pediatric-brain-imaging-map/) | 265| .nii.gz |
+| 18-30 years | [Chinese Color Nest Project (CCNP)](https://ccnp.scidb.cn/en) | 211 | .nii.gz |
+| 62-90 years | [Aging Brain: Vasculature, Ischemia, and Behavior (ABVIB)](https://nda.nih.gov/edit_collection.html?id=2848/) | 228 | .nii.gz |
+| 17-27 years | Southwest University Longitudinal Imaging Multimodal (SLIM) Brain Data Repository](http://fcon 1000.projects.nitrc.org/indi/retro/southwestuni qiu index.html) | 572 | .nii.gz |
+|  | To be continue |  | |
 
+> [!NOTE]
+> Since we do not have the rights to share the raw data, users may have to download the raw data from the above links in the table and perform the following steps to match the provided brain masks:
+> (1) Converting to the required format;
+> (2) Reorienting MRI data to the RAI (Right-Anterior-Inferior) orientation;
+> (3) Resampling the reorientated MRI data to the size of 256\*256\*256 with the resolution of 1\*1\*1.
+> 
 
 ### Lifespan_brain_atlases:
 > 
