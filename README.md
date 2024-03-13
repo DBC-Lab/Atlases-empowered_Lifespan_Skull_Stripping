@@ -42,7 +42,7 @@ This folder contains 10 sub-folders (*0month, 3months, 6months, 9months, 12month
 
 ### Testing_subjects: 
 
-We will gradually update the manual labels of the large-scale dataset consisting of 18 datasets in this folder. The data information has been summarized in the table below.
+We will gradually release our annotations for over 20,000 scans to serve as a resource for the community. So far, we have released annotations for dHCP, MAP, CCNP, ABVIB and SLIM datasets, with more to come.
 
 | Age group | Data source | Number | Format |
 | --- | --- | --- | --- |
@@ -51,7 +51,7 @@ We will gradually update the manual labels of the large-scale dataset consisting
 | 18-30 years | [Chinese Color Nest Project (CCNP)](https://ccnp.scidb.cn/en) | 211 | .nii.gz |
 | 62-90 years | [Aging Brain: Vasculature, Ischemia, and Behavior (ABVIB)](https://nda.nih.gov/edit_collection.html?id=2848/) | 228 | .nii.gz |
 | 17-27 years | [Southwest University Longitudinal Imaging Multimodal (SLIM) Brain Data Repository](http://fcon_1000.projects.nitrc.org/indi/retro/southwestuni_qiu_index.html) | 572 | .nii.gz |
-|  | To be continue | | |
+|  | More will be coming | | |
 
 > [!NOTE]
 > Since we do not have the rights to share the raw data, users may have to download the raw data from the above links in the table and perform the following steps to match the provided brain masks:
