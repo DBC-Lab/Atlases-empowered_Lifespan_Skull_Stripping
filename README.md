@@ -9,10 +9,10 @@ This repository contains the code for the atlases-empowered lifespan skull strip
 Note: The current model is suitable for lifespan subjects from birth to old age, with minor tissue deformities. We are now working on incorporating fetal subjects and pathological cases into our training dataset. Please stay tuned.
 
 ## Update: Our single model can handle T1w/T2w/FLAIR MRIs. Here are demos of skull stripping results from lifespan T2w/FLAIR MRIs (left to right: raw MRI, estimated brain probability, and brain mask):
-<div align=center><img src="https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/assets/110405481/a06754bc-d525-4873-bae1-56792aae75cd" width="400px">
+<div align=center><img src="https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/assets/110405481/a06754bc-d525-4873-bae1-56792aae75cd" width="400px"></div>
 
 ## Update: Our single model can handle pathological MRIs with High Distortion (HD). Here are demos of skull stripping results from pathological T1w MRIs (left to right: raw MRI, estimated brain probability, and brain mask):
-<div align=center><img src="https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Performance_on_pathological_MRIs.png" width="400px">
+<div align=center><img src="https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Performance_on_pathological_MRIs.png" width="400px"></div>
 
 
 ## File Descriptions
