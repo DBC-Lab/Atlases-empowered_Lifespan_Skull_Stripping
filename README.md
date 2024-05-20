@@ -14,7 +14,7 @@ Note: The current model is suitable for lifespan subjects from birth to old age,
 ## Update: By augmenting training subjects with simulated tissue loss, our model can handle pathological MRIs with High Distortion (HD). Here are demos of skull stripping results from pathological T1w MRIs (left to right: raw MRI, estimated brain probability, and brain mask):
 <div align=center><img src="https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Performance_on_pathological_MRIs.png" width="400px"></div>
 
-## Update: We have expanded our model to perform skull stripping across various imaging sequences and modalities, such as FLAIR (Fluid-Attenuated Inversion Recovery), PD (Proton Density)-Weighted Imaging, Magnetic Resonance Angiography (MRA), EPI (Echo Planar Imaging), and Diffusion-Weighted Imaging (DWI). Here are demos of skull stripping results from different images (left to right: raw MRI, estimated brain probability, and brain mask):
+## Update: We have expanded our model to perform skull stripping across various imaging sequences and modalities, such as FLAIR (Fluid-Attenuated Inversion Recovery), PD (Proton Density)-Weighted Imaging, MRA (Magnetic Resonance Angiography), EPI (Echo Planar Imaging), and DWI (Diffusion-Weighted Imaging). Here are demos of skull stripping results from different images (left to right: raw MRI, estimated brain probability, and brain mask):
 <div align=center><img src="https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Performance_on_different_modalities.png" width="400px"></div>
 
 
