@@ -92,7 +92,7 @@ def main():
 
     with torch.no_grad():
         for file in os.scandir(args.input_path):
-            if file.name.endswith('-resample1.hdr'):
+            if file.name.endswith('.hdr'):
                 # read MRI image
                 T1w_img = sitk.ReadImage(file.path)
                 size = T1w_img.GetSize()
