@@ -191,15 +191,15 @@ You can initiate the training process by executing the following command:
 python3 main.py
 ```
 ---
-### Citation
+## Citation
 
-### License information
+## License information
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### Acknowledgements 
+## Acknowledgements 
 This work was supported by the National Institute of Mental Health under Award Numbers MH133845, MH117943, MH123202, and MH116225.
 
-### Support
+## Support
 
 - **Issue**: If you encounter any issues or have concerns, please submit them here [https://github.com/DBC-Lab/Brain_MRI_Enhancement/issues](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/issues) 
 
