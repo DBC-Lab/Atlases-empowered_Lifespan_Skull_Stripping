@@ -126,7 +126,7 @@ pip3 install -r requirements.txt
 
 #### Data Preparation
 
-We have provided 5 example adult T1-weighted MRimages in the ***'./Testing_subjects/'*** folder. These images are sourced from the [SynthStrip dataset]([http://www.developingconnectome.org/](https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/#dataset)). The age of the subjects in months at the time of image acquisition is integrated into the filenames of the images. If you want to test your own data located in different folders, you can use the ***--input_path*** argument to modify the input path. Note all imaging data was stored in the Analyze 7.5 file format, comprising of ***'.hdr'*** and ***'.img'*** files. 
+We have provided 3 example adult T1-weighted MR images in the ***'./Testing_subjects/'*** folder. These images are sourced from the [Chinese Color Nest Project (CCNP)](https://www.scidb.cn/en/detail?dataSetId=c81f0e90a51b4cfca348ce4da6ca734e). The age of the subjects in months at the time of image acquisition is integrated into the filenames of the images. If you want to test your own data located in different folders, you can use the ***--input_path*** argument to modify the input path. Note all imaging data was stored in the Analyze 7.5 file format, comprising of ***'.hdr'*** and ***'.img'*** files. 
 
 #### Model Preparation
 
