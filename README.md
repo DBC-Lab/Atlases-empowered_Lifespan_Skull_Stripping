@@ -2,6 +2,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14047793.svg)](https://doi.org/10.5281/zenodo.14047793)
 
 Atlases-empowered lifespan skull stripping framework (LifespanStrip) is designed to perform skull stripping on lifespan T1-weighted MRIs from multiple sites by utilizing personalized prior information from atlases.
+![image](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Tutorial.jpg)
 
 ### Model overview
 
