@@ -3,21 +3,22 @@
 
 Atlases-empowered lifespan skull stripping framework (LifespanStrip) is designed to perform skull stripping on lifespan T1-weighted MRIs from multiple sites by utilizing personalized prior information from atlases.
 
-## About 
+### Model overview
 
 ![image](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Picture2.png)
 
 This repository includes the code for the atlases-empowered lifespan skull stripping framework, which is designed to perform skull stripping on T1-weighted MRIs subjects across the lifespan from multiple sites, using personalized prior information derived from atlases. The code presents the complete skull stripping process for T1-weighted MRIs under the guidance of age-specific brain atlases, including the brain extraction module and registration module. The brain extraction module utilizes a brain extraction network to extract the brain parenchyma and generate an initial estimation. In the registration module, an age-specific atlas is registered to the estimated brain, incorporating personalized prior knowledge. The deformation field generated during the registration process is then applied to the corresponding atlas, resulting in the final brain mask.
 
-> [!NOTE] The current model is suitable for lifespan T1-weighted MRIs from birth to old age, with minor tissue deformities. We are now working on incorporating fetal subjects and pathological cases into our training dataset. Please stay tuned.
+> [!NOTE]
+> The current model is suitable for lifespan T1-weighted MRIs from birth to old age, with minor tissue deformities. We have also updated the extended model to handle multi-modality images and pathological MRIs with high distortion (HD), as shown in the skull stripping results below. Please refer to [citation] for more information.
 
-## Update: Our single model can handle T1w/T2w/FLAIR MRIs. Here are demos of skull stripping results from lifespan T2w/FLAIR MRIs (left to right: raw MRI, estimated brain probability, and brain mask):
+### Update: Our single model can handle T1w/T2w/FLAIR MRIs. Here are demos of skull stripping results from lifespan T2w/FLAIR MRIs (left to right: raw MRI, estimated brain probability, and brain mask):
 <div align=center><img src="https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/assets/110405481/a06754bc-d525-4873-bae1-56792aae75cd" width="400px"></div>
 
-## Update: By augmenting training subjects with simulated tissue loss, our model can handle pathological MRIs with High Distortion (HD). Here are demos of skull stripping results from pathological T1w MRIs (left to right: raw MRI, estimated brain probability, and brain mask):
+### Update: By augmenting training subjects with simulated tissue loss, our model can handle pathological MRIs with High Distortion (HD). Here are demos of skull stripping results from pathological T1w MRIs (left to right: raw MRI, estimated brain probability, and brain mask):
 <div align=center><img src="https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Performance_on_pathological_MRIs.png" width="400px"></div>
 
-## Update: We have expanded our model to perform skull stripping across various imaging sequences and modalities, such as FLAIR (Fluid-Attenuated Inversion Recovery), PD (Proton Density)-Weighted Imaging, MRA (Magnetic Resonance Angiography), EPI (Echo Planar Imaging), and DWI (Diffusion-Weighted Imaging). Here are demos of skull stripping results from different images (left to right: raw MRI, estimated brain probability, and brain mask):
+### Update: We have expanded our model to perform skull stripping across various imaging sequences and modalities, such as FLAIR (Fluid-Attenuated Inversion Recovery), PD (Proton Density)-Weighted Imaging, MRA (Magnetic Resonance Angiography), EPI (Echo Planar Imaging), and DWI (Diffusion-Weighted Imaging). Here are demos of skull stripping results from different images (left to right: raw MRI, estimated brain probability, and brain mask):
 <div align=center><img src="https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Performance_on_different_modalities.png" width="400px"></div>
 
 
