@@ -24,9 +24,13 @@ This repository includes the code for the atlases-empowered lifespan skull strip
 ### Citation
 
 ### License information
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### Acknowledgements
+### Acknowledgements 
+This work was supported by the National Institute of Mental Health under Award Numbers MH133845, MH117943, MH123202, and MH116225.
 
+
+---
 ## File Descriptions
 
 ### Training_subjects: 
