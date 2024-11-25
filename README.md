@@ -201,6 +201,6 @@ This work was supported by the National Institute of Mental Health under Award N
 
 ## Support
 
-- **Issue**: If you encounter any issues or have concerns, please submit them here [https://github.com/DBC-Lab/Brain_MRI_Enhancement/issues](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/issues) 
+- **Issue**: If you encounter any issues or have concerns, please submit them here [(https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/issues)](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/issues) 
 
 
