@@ -134,7 +134,7 @@ pip3 install -r requirements.txt
 
 #### Data Preparation
 
-We have provided 5 example adult T1-weighted MRimages in the ***'./Testing_subjects/'*** folder. These images are sourced from the SynthStrip dataset [5]. The age of the subjects in months at the time of image acquisition is integrated into the filenames of the images. If you want to test your own data located in different folders, you can use the ***--input_path*** argument to modify the input path. Note all imaging data was stored in the Analyze 7.5 file format, comprising of ***'.hdr'*** and ***'.img'*** files. 
+We have provided 5 example adult T1-weighted MRimages in the ***'./Testing_subjects/'*** folder. These images are sourced from the [SynthStrip dataset]([http://www.developingconnectome.org/](https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/#dataset)). The age of the subjects in months at the time of image acquisition is integrated into the filenames of the images. If you want to test your own data located in different folders, you can use the ***--input_path*** argument to modify the input path. Note all imaging data was stored in the Analyze 7.5 file format, comprising of ***'.hdr'*** and ***'.img'*** files. 
 
 #### Model Preparation
 
@@ -148,7 +148,7 @@ After downloading the model, it should be placed in ***./Model/*** folder for co
 You can achieve skull stripping on brain MRIs using the provided checkpoint by executing the following command:
 
 ```
-python testing.py --input_path  --output_path --age_in_month
+python testing.py --input_path  --output_path  --age_in_month
 ```
 
 In this command, ***--input_path*** specifies the folder to the testing data (the default is ***'Testing_subjects'***). The ***--output_path*** indicates where the skull stripping results will be saved (with ***'Testing_subjects'*** as the default location). Additionally, the ***--stage*** option is utilized to specify the exact age in months of the test subjects. Based on the provided age information, our testing procedure will select the most appropriate brain atlas for testing. 
