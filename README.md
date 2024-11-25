@@ -1,5 +1,7 @@
 # Atlases-empowered_Lifespan_Skull_Stripping
 
+Atlases-empowered lifespan skull stripping framework is designed to perform skull stripping on lifespan T1-weighted MRIs from multiple sites by utilizing personalized prior information from atlases.
+
 ## Model Overview
 
 ![image](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Picture2.png)
