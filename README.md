@@ -21,6 +21,11 @@ This repository includes the code for the atlases-empowered lifespan skull strip
 ### Update: We have expanded our model to perform skull stripping across various imaging sequences and modalities, such as FLAIR (Fluid-Attenuated Inversion Recovery), PD (Proton Density)-Weighted Imaging, MRA (Magnetic Resonance Angiography), EPI (Echo Planar Imaging), and DWI (Diffusion-Weighted Imaging). Here are demos of skull stripping results from different images (left to right: raw MRI, estimated brain probability, and brain mask):
 <div align=center><img src="https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Performance_on_different_modalities.png" width="400px"></div>
 
+### Citation
+
+### License information
+
+### Acknowledgements
 
 ## File Descriptions
 
