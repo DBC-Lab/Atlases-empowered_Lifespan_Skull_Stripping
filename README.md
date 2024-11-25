@@ -140,7 +140,7 @@ After downloading the model, it should be placed in ***./Model/*** folder for co
 You can achieve skull stripping on brain MRIs using the provided checkpoint by executing the following command:
 
 ```
-python testing.py --input_path  --output_path  --age_in_month
+python LifespanStrip.py --input_path  --output_path  --age_in_month
 ```
 
 In this command, ***--input_path*** specifies the folder to the testing data (the default is ***'Testing_subjects'***). The ***--output_path*** indicates where the skull stripping results will be saved (with ***'Testing_subjects'*** as the default location). Additionally, the ***--age_in_month*** option is utilized to specify the exact age in months of the test subjects. Based on the provided age information, our testing procedure will select the most appropriate brain atlas for testing. 
