@@ -350,7 +350,7 @@ def main():
                     max(z_min - 40, 0):min(z_max + 40, T1w_img.shape[2])] = opened_image
 
                     if i==0:
-                        save_dir = file.path.replace('.hdr', '-stripped-2.nii', 1)
+                        save_dir = file.path.replace('.nii', '-stripped-2.nii', 1)
                         out = sitk.GetImageFromArray(brain_mask)
                         out.SetOrigin(origin)
                         out.SetSpacing(spacing)
