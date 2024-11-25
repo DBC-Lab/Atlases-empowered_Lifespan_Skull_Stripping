@@ -92,7 +92,7 @@ def main():
 
     with torch.no_grad():
         for file in os.scandir(args.input_path):
-            if file.name.endswith('.hdr'):
+            if '.nii' in file.name:
                 # read MRI image
                 T1w_img = sitk.ReadImage(file.path)
                 size = T1w_img.GetSize()
@@ -350,7 +350,7 @@ def main():
                     max(z_min - 40, 0):min(z_max + 40, T1w_img.shape[2])] = opened_image
 
                     if i==0:
-                        save_dir = file.path.replace('.hdr', '-stripped-2.hdr', 1)
+                        save_dir = file.path.replace('.hdr', '-stripped-2.nii', 1)
                         out = sitk.GetImageFromArray(brain_mask)
                         out.SetOrigin(origin)
                         out.SetSpacing(spacing)
@@ -358,7 +358,7 @@ def main():
                         sitk.WriteImage(out, save_dir)
 
                     else:
-                        save_dir = args.output_path + img_name + '-brainmask.hdr'
+                        save_dir = args.output_path + img_name + '-brainmask.nii'
                         out = sitk.GetImageFromArray(brain_mask)
                         out.SetOrigin(origin)
                         out.SetSpacing(spacing)
