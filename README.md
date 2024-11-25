@@ -102,7 +102,7 @@ We will gradually release our annotations for over 20,000 scans to serve as a re
 
 
 
-
+---
 ## Testing Instruction
 
 ### 1. System Requirements
@@ -158,7 +158,7 @@ For each provided T1-weighted MR image, our testing procedure initially rotates 
 After the preprocessing step, the images are resized to a uniform size of 128 × 128 × 128, with a resolution of 2×2×2 mm³, and then rescaled to the same range. Following this, the testing procedure utilizes the trained model to perform skull stripping and then saves the final brain mask, resampled to the input image size, in the output path ***--output_path***.
 
 
-
+---
 ## Training Instruction
 
 ### 1. Setting Hyper-parameters
