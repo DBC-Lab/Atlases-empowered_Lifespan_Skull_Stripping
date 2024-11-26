@@ -1,25 +1,22 @@
 import os
 import torch
-import torch.nn as nn
 import numpy as np
 from scipy import ndimage
 from scipy.ndimage import zoom
-import torch.nn.functional as F
+from scipy.ndimage import label as ndimage_label
+from scipy.ndimage import sum as ndi_sum
 from monai.inferers import sliding_window_inference
+import math
 from networks.net import NET
-from utils.data_utils import get_loader
-from trainer import dice
 import argparse
-from scipy.ndimage.interpolation import shift
 import SimpleITK as sitk
-from skimage import measure
 
 import subprocess
 
 parser = argparse.ArgumentParser(description='Skull stripping pipeline')
 parser.add_argument('--pretrained_dir', default='./Model/', type=str, help='pretrained checkpoint directory')
 parser.add_argument('--data_dir', default='/', type=str, help='dataset directory')
-parser.add_argument('--pretrained_model_name', default='model_best_acc.pt', type=str, help='pretrained model name')
+parser.add_argument('--pretrained_model_name', default='epoch1049model-all.pt', type=str, help='pretrained model name')
 parser.add_argument('--saved_checkpoint', default='ckpt', type=str, help='Supports torchscript or ckpt pretrained checkpoint type')
 parser.add_argument('--mlp_dim', default=3072, type=int, help='mlp dimention in ViT encoder')
 parser.add_argument('--hidden_size', default=768, type=int, help='hidden size dimention in ViT encoder')
@@ -91,281 +88,268 @@ def main():
     model.to(device)
 
     with torch.no_grad():
+        if os.path.exists(args.input_path):
+            print(f"Work on {args.input_path}")
+        else:
+            print(f"Input path {args.input_path} does not exist!")
+
+        if not os.path.exists(args.output_path):
+            os.makedirs(args.output_path)
+            print(f"Output path {args.output_path} created.")
+
         for file in os.scandir(args.input_path):
             if '.nii' in file.name:
-                # read MRI image
+                # Read and preprocess MRI image
+                img_name = os.path.splitext(file.name)[0]
+                print('Processing:', img_name)
+
                 T1w_img = sitk.ReadImage(file.path)
-                size = T1w_img.GetSize()
-                origin = T1w_img.GetOrigin()
-                spacing = T1w_img.GetSpacing()
-                direction = T1w_img.GetDirection()
+                original_direction = T1w_img.GetDirection()
+                print("Original Direction:", original_direction)
+                new_direction = [1, 0, 0, 0, 1, 0, 0, 0, 1]
+                T1w_img.SetDirection(new_direction)
 
-                # reorient to RAI (Right-Anterior-Inferior)
-                rai_transform = sitk.DICOMOrientImageFilter()
-                rai_transform.SetDesiredCoordinateOrientation("RAI")
-                rai_image = rai_transform.Execute(T1w_img)
-                T1w_img = rai_image
+                # save reoriented MRI image
+                save_dir = args.output_path + '/' + img_name + '-reorient.nii'
+                sitk.WriteImage(T1w_img, save_dir)
 
-                # allpy N4
+                # print new direction
+                size, origin, spacing, direction = T1w_img.GetSize(), T1w_img.GetOrigin(), T1w_img.GetSpacing(), T1w_img.GetDirection()
+                print("New Direction:",direction)
+                print('Reoriente done')
+
+                # Apply N4 bias correction if specified
                 if args.N4 == 'True':
                     corrector = sitk.N4BiasFieldCorrectionImageFilter()
-                    number_of_iterations = [50, 50, 30, 20]
-                    corrector.SetMaximumNumberOfIterations(number_of_iterations)
-                    output_image = corrector.Execute(T1w_img)
-                    T1w_img = output_image
+                    corrector.SetMaximumNumberOfIterations([50, 50, 30, 20])
+                    T1w_img = corrector.Execute(T1w_img)
+                    print('N4 done')
+                print('Skip N4')
 
-
-                T1w_img = sitk.GetArrayFromImage(T1w_img)
-                img_name = file.name.split('/')[-1].split('.')[0]
-
-                # read atlas and atlas mask
-                if int(args.age_in_month)<=2:
+                # Select appropriate atlas and mask based on age
+                age_month = int(args.age_in_month)
+                if age_month <= 2:
                     month = 'Month0'
-                if ((int(args.age_in_month)>2)&(int(args.age_in_month)<=4)):
+                elif age_month <= 4:
                     month = 'Month3'
-                if ((int(args.age_in_month)>4)&(int(args.age_in_month)<=7)):
+                elif age_month <= 7:
                     month = 'Month6'
-                if ((int(args.age_in_month)>7)&(int(args.age_in_month)<=10)):
+                elif age_month <= 10:
                     month = 'Month9'
-                if ((int(args.age_in_month)>10)&(int(args.age_in_month)<=14)):
+                elif age_month <= 14:
                     month = 'Month12'
-                if ((int(args.age_in_month)>14)&(int(args.age_in_month)<=20)):
+                elif age_month <= 20:
                     month = 'Month18'
-                if ((int(args.age_in_month)>20)&(int(args.age_in_month)<=28)):
+                elif age_month <= 28:
                     month = 'Month24'
-                if ((int(args.age_in_month)>28)&(int(args.age_in_month)<=540)):
+                elif age_month <= 540:
                     month = 'Adolescent'
-                if ((int(args.age_in_month)>540)&(int(args.age_in_month)<=1920)):
+                elif age_month <= 1920:
                     month = 'Adult'
-                if ((int(args.age_in_month)>1920)):
+                else:
                     month = 'Elder'
 
-                atlas = sitk.ReadImage(
-                    './Lifespan_brain_atlases/brain-atlas-' + month + '-downsample.hdr')
-                atlas = sitk.GetArrayFromImage(atlas)
-                atlas = torch.tensor(atlas).float()
+                # Load atlas and atlas mask
+                atlas_path = f'./Lifespan_brain_atlases/brain-atlas-{month}-downsample.hdr'
+                atlas_mask_path = f'./Lifespan_brain_atlases/brain-atlas-{month}-mask-downsample.hdr'
 
-                atlas_mask = sitk.ReadImage(
-                    './Lifespan_brain_atlases/brain-atlas-' + month + '-mask-downsample.hdr')
-                atlas_mask = sitk.GetArrayFromImage(atlas_mask)
-                atlas_mask = torch.tensor(atlas_mask).float()
+                atlas = sitk.ReadImage(atlas_path)
+                atlas_mask = sitk.ReadImage(atlas_mask_path)
 
+                atlas = torch.tensor(sitk.GetArrayFromImage(atlas)).float().to(device)
+                atlas_mask = torch.tensor(sitk.GetArrayFromImage(atlas_mask)).float().to(device)
 
-                # rescale atlas
-                atlas = atlas.to(device)
-                atlas_mask = atlas_mask.to(device)
-                atlas = (atlas - torch.min(atlas)) / (torch.max(atlas) - torch.min(atlas))
+                # Rescale atlas intensity
+                atlas = (atlas - atlas.min()) / (atlas.max() - atlas.min())
+                print('Load atlas done')
 
                 #######################
                 #### First_testing ####
                 #######################
-                template = sitk.ReadImage('./Template/template.hdr')
-                #template = sitk.GetArrayFromImage(template)
-                T1w_img_img = sitk.GetImageFromArray(T1w_img)
 
-                # histgram matching
+                # Downsample image to 128x128x128 with 2.0 mm resolution
+                resampler = sitk.ResampleImageFilter()
+                resampler.SetSize([128, 128, 128])
+                resampler.SetOutputSpacing([2.0, 2.0, 2.0])
+                resampler.SetOutputOrigin(origin)
+                resampler.SetOutputDirection(direction)
+                resampler.SetInterpolator(sitk.sitkLinear)
+                T1w_img_downsample = resampler.Execute(T1w_img)
+                T1w_img_downsample.SetDirection(T1w_img.GetDirection())
+
+                # Load and histogram-match the template
+                template = sitk.ReadImage('./Template/template.hdr')
                 matcher = sitk.HistogramMatchingImageFilter()
                 matcher.SetNumberOfHistogramLevels(1024)
                 matcher.SetNumberOfMatchPoints(7)
                 matcher.ThresholdAtMeanIntensityOn()
-                T1w_img_img_hm = matcher.Execute(T1w_img_img, template)
-
-                # downsample to resolution 2.0
-                xsize = float(size[0]) * float(spacing[0]) * 0.5
-                ysize = float(size[1]) * float(spacing[1]) * 0.5
-                zsize = float(size[2]) * float(spacing[2]) * 0.5
-
-                resampler = sitk.ResampleImageFilter()
-                resampler.SetSize([int(xsize), int(ysize), int(zsize)])
-                resampler.SetOutputSpacing([2,2,2])
-                resampler.SetOutputOrigin(origin)
-                resampler.SetOutputDirection(direction)
-                resampler.SetInterpolator(sitk.sitkLinear)
-
-                T1w_img_hm_downsample = resampler.Execute(T1w_img_img_hm)
-                T1w_img_hm_downsample = sitk.GetArrayFromImage(T1w_img_hm_downsample)
+                T1w_img_downsample_hm = matcher.Execute(T1w_img_downsample, template)
 
 
-                # rescale T1w_img_hm_downsample
-                T1w_img_hm_downsample = torch.tensor(T1w_img_hm_downsample).float()
-                T1w_img_hm_downsample = T1w_img_hm_downsample.to(device)
-                T1w_img_hm_downsample = (T1w_img_hm_downsample - torch.min(T1w_img_hm_downsample)) / (torch.max(T1w_img_hm_downsample) - torch.min(T1w_img_hm_downsample))
+                # Normalize and prepare for model input
+                T1w_img_downsample_hm = sitk.GetArrayFromImage(T1w_img_downsample_hm)
+                T1w_img_downsample_hm = torch.tensor(T1w_img_downsample_hm, device=device).float()
+                T1w_img_downsample_hm = (T1w_img_downsample_hm - T1w_img_downsample_hm.min()) / (
+                        T1w_img_downsample_hm.max() - T1w_img_downsample_hm.min())
+                T1w_img_downsample_hm = T1w_img_downsample_hm.unsqueeze(0).unsqueeze(0)
 
-                T1w_img_hm_downsample = torch.unsqueeze(T1w_img_hm_downsample, dim=0)
-                T1w_img_hm_downsample = torch.unsqueeze(T1w_img_hm_downsample, dim=0)
+                # Model inference
+                logits, *_ = model(T1w_img_downsample_hm, atlas, atlas_mask)
 
-                # testing
-                logits, moving_trans, y_source, pos_flow, x_reg, atlas_mask_formable = model(T1w_img_hm_downsample, atlas, atlas_mask)
-
-                # Extracted brain mask
+                # Extract and process brain mask
                 logits = logits.cpu().numpy()
-                pre = np.argmax(logits, axis=1)[0,:,:,:]
-                pre_upsample = zoom(pre, 2.0, order=3)
-                pre_upsample_b = np.where(pre_upsample>0.5, 1.0, 0.0)
+                pre = np.argmax(logits, axis=1)[0]
 
-                # Binaryopening
-                pre_upsample_b = pre_upsample_b.astype(int)
+                # Upsample logits to original size and resolution
+                upsample_factor = [osz / 128 for osz in size]
+                pre_upsample = zoom(pre, upsample_factor, order=3)
+                pre_upsample_b = (pre_upsample > 0.5).astype(int)
+
+                # Apply binary opening
                 pre_upsample_b = sitk.GetImageFromArray(pre_upsample_b)
                 opening_filter = sitk.BinaryMorphologicalOpeningImageFilter()
-                opening_filter.SetKernelRadius(8)
+                opening_filter.SetKernelRadius(3)
                 opened_image = opening_filter.Execute(pre_upsample_b)
 
-                # Remain 3D maximum connected component
+                # Extract largest connected component
                 opened_image = sitk.GetArrayFromImage(opened_image)
-                labeled_array, num_features = ndimage.label(opened_image)
+                labeled_array, _ = ndimage_label(opened_image)
+                sizes = ndi_sum(opened_image, labeled_array, range(labeled_array.max() + 1))
+                mask = sizes < max(sizes)
+                labeled_array[mask[labeled_array]] = 0
+                labeled_array, _ = ndimage_label(labeled_array)
 
-                sizes = ndimage.sum(opened_image, labeled_array, range(num_features + 1))
-                mask_size = sizes < max(sizes)
-                remove_pixel = mask_size[labeled_array]
-                labeled_array[remove_pixel] = 0
-                labeled_array, _ = ndimage.label(labeled_array)
+                '''
+                # Save the processed brain mask
+                output_path = file.path.replace('.nii', '-stripped-2.hdr', 1)
+                out_image = sitk.GetImageFromArray(labeled_array)
+                out_image.SetOrigin(origin)
+                out_image.SetSpacing(spacing)
+                out_image.SetDirection(direction)
+                sitk.WriteImage(out_image, output_path)
+                '''
 
-                save_dir = file.path.replace('.hdr', '-stripped-2.hdr', 1)
-                out = sitk.GetImageFromArray(labeled_array)
+                print('First testing done')
+
+
+                #######################
+                #### Second_testing ###
+                #######################
+
+                # Step 1: Crop the initial brain region based on the first testing result
+                T1w_img = sitk.GetArrayFromImage(T1w_img)
+                loc = np.where(labeled_array == 1)
+                x_min = np.min(loc[0])
+                x_max = np.max(loc[0])
+                if ((x_max - x_min) * spacing[0]) % 2 != 0:
+                    x_max -= 1
+                y_min = np.min(loc[1])
+                y_max = np.max(loc[1])
+                if ((y_min - y_max) * spacing[1]) % 2 != 0:
+                    y_max -= 1
+                z_min = np.min(loc[2])
+                z_max = np.max(loc[2])
+                if ((z_min - z_max) * spacing[2]) % 2 != 0:
+                    z_max -= 1
+
+                T1w_img_crop = T1w_img[
+                               max(x_min - 20, 0):min(x_max + 40, T1w_img.shape[0]),
+                               max(y_min - 40, 0):min(y_max + 40, T1w_img.shape[1]),
+                               max(z_min - 40, 0):min(z_max + 40, T1w_img.shape[2])
+                               ]
+
+                # Step 2: Downsample the cropped image to a uniform 2.0 mm resolution
+                xsize = T1w_img_crop.shape[0]
+                ysize = T1w_img_crop.shape[1]
+                zsize = T1w_img_crop.shape[2]
+                xsize_downsample = math.ceil(T1w_img_crop.shape[0] * spacing[0] * 0.5)
+                ysize_downsample = math.ceil(T1w_img_crop.shape[1] * spacing[1] * 0.5)
+                zsize_downsample = math.ceil(T1w_img_crop.shape[2] * spacing[2] * 0.5)
+
+                T1w_img_crop = sitk.GetImageFromArray(T1w_img_crop)
+                resampler = sitk.ResampleImageFilter()
+                resampler.SetSize([zsize_downsample, ysize_downsample, xsize_downsample])
+                resampler.SetOutputSpacing([2, 2, 2])
+                resampler.SetOutputOrigin(T1w_img_crop.GetOrigin())
+                resampler.SetOutputDirection(T1w_img_crop.GetDirection())
+                resampler.SetInterpolator(sitk.sitkLinear)
+                T1w_img_crop_downsample = resampler.Execute(T1w_img_crop)
+
+                # Step 3: Center the cropped brain region within a 128x128x128 array
+                T1w_img_crop_downsample = sitk.GetArrayFromImage(T1w_img_crop_downsample)
+                x = T1w_img_crop_downsample.shape[0]
+                y = T1w_img_crop_downsample.shape[1]
+                z = T1w_img_crop_downsample.shape[2]
+
+                temp = np.zeros([128, 128, 128])
+                temp[max(118 - x, 0):118, int((128 - y) / 2):int((128 - y) / 2) + y,
+                int((128 - z) / 2):int((128 - z) / 2) + z] = T1w_img_crop_downsample[max(x - 118, 0):, :, :]
+
+                # Step 4: Perform histogram matching to align intensity distributions
+                temp = sitk.GetImageFromArray(temp)
+                temp = sitk.Cast(temp, sitk.sitkFloat64)
+                template = sitk.Cast(template, sitk.sitkFloat64)
+                matcher = sitk.HistogramMatchingImageFilter()
+                matcher.SetNumberOfHistogramLevels(1024)
+                matcher.SetNumberOfMatchPoints(7)
+                matcher.ThresholdAtMeanIntensityOn()
+                T1w_img_crop_downsample_temp_hm = matcher.Execute(temp, template)
+                T1w_img_crop_downsample_temp_hm = sitk.GetArrayFromImage(T1w_img_crop_downsample_temp_hm)
+
+                # Step 5: Normalize the centered image for model input
+                T1w_img_crop_downsample_temp_hm = torch.tensor(T1w_img_crop_downsample_temp_hm, device=device).float()
+                T1w_img_crop_downsample_temp_hm = (T1w_img_crop_downsample_temp_hm - T1w_img_crop_downsample_temp_hm.min()) / (
+                        T1w_img_crop_downsample_temp_hm.max() - T1w_img_crop_downsample_temp_hm.min())
+                T1w_img_crop_downsample_temp_hm= T1w_img_crop_downsample_temp_hm.unsqueeze(0).unsqueeze(0)
+
+                # Step 6: Model inference to refine the brain mask
+                logits, moving_trans, y_source, pos_flow, x_reg, atlas_mask_formable = model(
+                    T1w_img_crop_downsample_temp_hm, atlas, atlas_mask
+                )
+
+                # Step 7: Extract and crop the atlas mask's center area
+                atlas_mask_formable = atlas_mask_formable[0, 0].cpu().numpy()
+                atlas_mask_crop = atlas_mask_formable[
+                                  max(118 - x, 0):118,
+                                  (128 - y) // 2:(128 - y) // 2 + y,
+                                  (128 - z) // 2:(128 - z) // 2 + z
+                                  ]
+
+                # Step 8: Resample the cropped atlas mask to the original resolution
+                resampler = sitk.ResampleImageFilter()
+
+                resampler.SetSize([zsize, ysize, xsize])
+                resampler.SetOutputSpacing(spacing)
+                atlas_mask_crop = sitk.GetImageFromArray(atlas_mask_crop)
+                atlas_mask_crop.SetSpacing([2.0, 2.0, 2.0])
+                atlas_mask_crop_upsample = resampler.Execute(atlas_mask_crop)
+
+                # Step 9: Threshold and refine the atlas mask to create a binary brain mask
+                atlas_mask_crop_upsample = sitk.GetArrayFromImage(atlas_mask_crop_upsample)
+                binary_image = np.where(atlas_mask_crop_upsample > 0.5, 1, 0).astype(np.int32)
+                binary_image = sitk.GetImageFromArray(binary_image)
+
+                # Step 10: Apply morphological opening to refine the binary brain mask
+                opening_filter = sitk.BinaryMorphologicalOpeningImageFilter()
+                opening_filter.SetKernelRadius(5)
+                opened_image = opening_filter.Execute(binary_image)
+                opened_image = sitk.GetArrayFromImage(opened_image)
+
+                # Step 11: Restore the binary brain mask to the original position
+                brain_mask = np.zeros(size, dtype=np.int32)
+                brain_mask[max(x_min - 20, 0):min(x_max + 40, T1w_img.shape[0]),
+                               max(y_min - 40, 0):min(y_max + 40, T1w_img.shape[1]),
+                               max(z_min - 40, 0):min(z_max + 40, T1w_img.shape[2])] = opened_image
+
+                # Step 12: Save the final brain mask
+                save_dir = args.output_path + '/' + img_name + '-reorient-brainmask.nii'
+                out = sitk.GetImageFromArray(brain_mask)
                 out.SetOrigin(origin)
                 out.SetSpacing(spacing)
                 out.SetDirection(direction)
                 sitk.WriteImage(out, save_dir)
+                print('Skull stripping done')
 
-                #######################
-                #### Second_testing ####
-                #######################
-
-                for i in range(2):
-                    #### crop
-                    ininal_label_img = labeled_array
-
-                    loc = np.where(ininal_label_img == 1)
-                    x_min = np.min(loc[0])
-                    x_max = np.max(loc[0])
-                    if (x_max - x_min) % 2 != 0:
-                        x_max += 1
-                    y_min = np.min(loc[1])
-                    y_max = np.max(loc[1])
-                    if (y_min - y_max) % 2 != 0:
-                        y_max += 1
-                    z_min = np.min(loc[2])
-                    z_max = np.max(loc[2])
-                    if (z_min - z_max) % 2 != 0:
-                        z_max += 1
-
-                    T1w_img_crop = T1w_img[max(x_min - 20, 0):min(x_max + 40, T1w_img.shape[0]),
-                                   max(y_min - 40, 0):min(y_max + 40, T1w_img.shape[1]),
-                                   max(z_min - 40, 0):min(z_max + 40, T1w_img.shape[2])]
-
-                    #### histgram matching
-                    T1w_img_crop_img = sitk.GetImageFromArray(T1w_img_crop)
-
-                    matcher = sitk.HistogramMatchingImageFilter()
-                    matcher.SetNumberOfHistogramLevels(1024)
-                    matcher.SetNumberOfMatchPoints(7)
-                    matcher.ThresholdAtMeanIntensityOn()
-                    moving = matcher.Execute(T1w_img_crop_img, template)
-
-                    #### downsample to resolution 2.0
-                    T1w_img_crop_hm = sitk.GetArrayFromImage(moving)
-                    T1w_img_crop_hm_img = moving
-
-                    xsize = T1w_img_crop_hm.shape[0] * float(spacing[0]) * 0.5
-                    ysize = T1w_img_crop_hm.shape[1] * float(spacing[1]) * 0.5
-                    zsize = T1w_img_crop_hm.shape[2] * float(spacing[2]) * 0.5
-
-                    resampler = sitk.ResampleImageFilter()
-                    resampler.SetSize([round(xsize), round(ysize), round(zsize)])
-                    resampler.SetOutputSpacing([2, 2, 2])
-                    resampler.SetOutputOrigin(origin)
-                    resampler.SetOutputDirection(direction)
-                    resampler.SetInterpolator(sitk.sitkLinear)
-
-                    T1w_img_crop_hm_downsample = resampler.Execute(T1w_img_crop_hm_img)
-
-                    # resize to size 128
-                    T1w_img_crop_hm_downsample = sitk.GetArrayFromImage(T1w_img_crop_hm_downsample)
-                    x = T1w_img_crop_hm_downsample.shape[0]
-                    y = T1w_img_crop_hm_downsample.shape[1]
-                    z = T1w_img_crop_hm_downsample.shape[2]
-
-                    temp = np.zeros([128, 128, 128])
-                    temp[max(118 - x, 0):118, int((128 - y) / 2):int((128 - y) / 2) + y,
-                    int((128 - z) / 2):int((128 - z) / 2) + z] = T1w_img_crop_hm_downsample[max(x - 118, 0):, :, :]
-
-                    # testing
-                    T1w_img_crop_hm_downsample = torch.tensor(temp).float()
-                    T1w_img_crop_hm_downsample = T1w_img_crop_hm_downsample.to(device)
-
-                    T1w_img_crop_hm_downsample = (T1w_img_crop_hm_downsample - torch.min(
-                        T1w_img_crop_hm_downsample)) / (
-                                                         torch.max(T1w_img_crop_hm_downsample) - torch.min(
-                                                     T1w_img_crop_hm_downsample))
-
-                    T1w_img_crop_hm_downsample = torch.unsqueeze(T1w_img_crop_hm_downsample, dim=0)
-                    T1w_img_crop_hm_downsample = torch.unsqueeze(T1w_img_crop_hm_downsample, dim=0)
-
-                    logits, moving_trans, y_source, pos_flow, x_reg, atlas_mask_formable = model(
-                        T1w_img_crop_hm_downsample, atlas,
-                        atlas_mask)
-
-                    atlas_mask_formable = atlas_mask_formable[0, 0, :, :, :].cpu().numpy()
-                    atlas_mask_crop = atlas_mask_formable[max(118 - x, 0):118,
-                                      int((128 - y) / 2):int((128 - y) / 2) + y,
-                                      int((128 - z) / 2):int((128 - z) / 2) + z]
-
-                    # resample to original resolution
-                    xsize = atlas_mask_crop.shape[0] * 2 * (1.0 / float(spacing[0]))
-                    ysize = atlas_mask_crop.shape[1] * 2 * (1.0 / float(spacing[1]))
-                    zsize = atlas_mask_crop.shape[2] * 2 * (1.0 / float(spacing[2]))
-                    print('######', xsize, ysize, zsize)
-
-                    resampler = sitk.ResampleImageFilter()
-                    resampler.SetSize([round(xsize), round(ysize), round(zsize)])
-                    resampler.SetOutputSpacing([float(spacing[0]), float(spacing[1]), float(spacing[2])])
-                    resampler.SetOutputOrigin(origin)
-                    resampler.SetOutputDirection(direction)
-                    resampler.SetInterpolator(sitk.sitkLinear)
-
-                    atlas_mask_crop = sitk.GetImageFromArray(atlas_mask_crop)
-                    atlas_mask_crop.SetSpacing([2, 2, 2])
-                    atlas_mask_crop_upsample = resampler.Execute(atlas_mask_crop)
-
-                    save_dir = args.input_path + img_name + '-atlas_mask_formable-downsample-upsample.hdr'
-                    atlas_mask_crop_upsample = sitk.GetArrayFromImage(atlas_mask_crop_upsample)
-                    out = sitk.GetImageFromArray(atlas_mask_crop_upsample)
-                    out.SetOrigin(origin)
-                    out.SetSpacing([float(spacing[0]), float(spacing[1]), float(spacing[2])])
-                    out.SetDirection(direction)
-                    sitk.WriteImage(out, save_dir)
-
-                    # resize to original size
-                    binary_image = np.where(atlas_mask_crop_upsample > 0.5, 1.0, 0.0)
-                    binary_image = binary_image.astype(int)
-                    binary_image = sitk.GetImageFromArray(binary_image)
-                    opening_filter = sitk.BinaryMorphologicalOpeningImageFilter()
-                    opening_filter.SetKernelRadius(5)
-                    opened_image = opening_filter.Execute(binary_image)
-
-                    opened_image = sitk.GetArrayFromImage(opened_image)
-                    brain_mask = np.zeros([size[0], size[1], size[2]])
-                    brain_mask[max(x_min - 20, 0):min(x_max + 40, T1w_img.shape[0]),
-                    max(y_min - 40, 0):min(y_max + 40, T1w_img.shape[1]),
-                    max(z_min - 40, 0):min(z_max + 40, T1w_img.shape[2])] = opened_image
-
-                    if i==0:
-                        save_dir = file.path.replace('.nii', '-stripped-2.nii', 1)
-                        out = sitk.GetImageFromArray(brain_mask)
-                        out.SetOrigin(origin)
-                        out.SetSpacing(spacing)
-                        out.SetDirection(direction)
-                        sitk.WriteImage(out, save_dir)
-
-                    else:
-                        save_dir = args.output_path + img_name + '-brainmask.nii'
-                        out = sitk.GetImageFromArray(brain_mask)
-                        out.SetOrigin(origin)
-                        out.SetSpacing(spacing)
-                        out.SetDirection(direction)
-                        sitk.WriteImage(out, save_dir)
-
-                    # os.remove(os.path.join(args.input_path, file.name.replace('.hdr', '-stripped-2.hdr', 1)))
 
 if __name__ == '__main__':
     main()
