@@ -16,7 +16,7 @@ import subprocess
 parser = argparse.ArgumentParser(description='Skull stripping pipeline')
 parser.add_argument('--pretrained_dir', default='./Model/', type=str, help='pretrained checkpoint directory')
 parser.add_argument('--data_dir', default='/', type=str, help='dataset directory')
-parser.add_argument('--pretrained_model_name', default='epoch1049model-all.pt', type=str, help='pretrained model name')
+parser.add_argument('--pretrained_model_name', default='Lifespan_Skull_Stripping.pt', type=str, help='pretrained model name')
 parser.add_argument('--saved_checkpoint', default='ckpt', type=str, help='Supports torchscript or ckpt pretrained checkpoint type')
 parser.add_argument('--mlp_dim', default=3072, type=int, help='mlp dimention in ViT encoder')
 parser.add_argument('--hidden_size', default=768, type=int, help='hidden size dimention in ViT encoder')
