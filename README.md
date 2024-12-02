@@ -3,7 +3,7 @@
 
 Atlases-empowered lifespan skull stripping framework (LifespanStrip) is designed to perform skull stripping on lifespan T1-weighted MRIs from multiple sites by utilizing personalized prior information from atlases.
 
-### Update: Containerized execution (Docker)
+### Getting Started: Containerized execution (Docker)
 
 We have provided the Docker container for LifespanStrip. The container is pre-configured with all necessary dependencies and follows the BIDS-Apps protocol principles.
 #### Prerequisites
@@ -60,7 +60,7 @@ We have provided the Docker container for LifespanStrip. The container is pre-co
     ```
 
 
-
+### Getting Started: A Guide to Using Code Directly from GitHub
 ![image](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Tutorial.jpg)
 
 ### Model overview
