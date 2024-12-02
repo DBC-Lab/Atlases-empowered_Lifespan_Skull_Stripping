@@ -1,7 +1,46 @@
 # Atlases-empowered_Lifespan_Skull_Stripping
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14047793.svg)](https://doi.org/10.5281/zenodo.14047793)
-
 Atlases-empowered lifespan skull stripping framework (LifespanStrip) is designed to perform skull stripping on lifespan T1-weighted MRIs from multiple sites by utilizing personalized prior information from atlases.
+
+### Update: Containerized execution (Docker)
+We have provided the Docker container for LifespanStrip. The container is pre-configured with all necessary dependencies and follows the BIDS-Apps protocol principles.
+#### Prerequisites
+1. Install Docker
+Ensure Docker is installed on your system.
+2. Pull the Docker Image
+Use the following command to pull the pre-built Docker image:
+```
+docker pull limeiw/lifespanstrip:v1
+```
+3. Prepare Your Data
+Ensure your input data adheres to the BIDS standard (if applicable). Alternatively, you can test it on the Lifespan_BIDS_dataset we provide.
+
+#### How to Run the Container
+1. Basic Command
+Run the Docker container using the following command:
+```
+docker run --gpus all -v /path/to/input:/app/data limeiw/lifespanstrip:v1 --bids_root filename_of_BIDS_dataset --subject_id id_of_subject --session_id id_of_session
+```
+***'-v /path/to/input'*** mounts the input data directory to the container's ***'-v /app/data'*** directory.
+***'--bids_root'*** specifies the BIDS dataset to be processed. 
+***'--subject_id'*** specifies a specific subject within the BIDS dataset to be processed (optional).
+***'--subject_id'*** specifies a specific session within the BIDS dataset to be processed (optional).
+2. Example Usage
+For example, using the Lifespan_BIDS_dataset we provided. The following command will process all the data that meets the criteria within the Lifespan_BIDS_dataset.
+```
+docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset
+```
+The following command will process a specific subject when the ***'--subject_id'*** is provided (e.g. A00032170).
+```
+docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset --subject_id A00032170
+```
+The following command will process a specific session when the --session_id (e.g. V02) is provided.
+```
+docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset --session_id V02
+```
+
+
+
 ![image](https://github.com/DBC-Lab/Atlases-empowered_Lifespan_Skull_Stripping/blob/main/Tutorial.jpg)
 
 ### Model overview
