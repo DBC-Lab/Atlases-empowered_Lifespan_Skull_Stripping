@@ -38,7 +38,7 @@ We have provided the Docker container for LifespanStrip. The container is pre-co
    
     ***'--subject_id'*** specifies a subject within the BIDS dataset to be processed (optional).
    
-    ***'--subject_id'*** specifies a session within the BIDS dataset to be processed (optional).
+    ***'--session_id'*** specifies a session within the BIDS dataset to be processed (optional).
    
 
 3. Example Usage
