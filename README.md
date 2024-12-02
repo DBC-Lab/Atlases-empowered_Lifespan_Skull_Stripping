@@ -10,18 +10,18 @@ We have provided the Docker container for LifespanStrip. The container is pre-co
 
 1. Install Docker
    
-Ensure Docker is installed on your system.
+    Ensure Docker is installed on your system.
 
 2. Pull the Docker Image
    
-Use the following command to pull the pre-built Docker image:
+    Use the following command to pull the pre-built Docker image:
 
 ```
 docker pull limeiw/lifespanstrip:v1
 ```
 3. Prepare Your Data
-4. 
-Ensure your input data adheres to the BIDS standard (if applicable). Alternatively, you can test it on the Lifespan_BIDS_dataset we provide.
+
+    Ensure your input data adheres to the BIDS standard (if applicable). Alternatively, you can test it on the Lifespan_BIDS_dataset we provide.
 
 #### How to Run the Container
 
