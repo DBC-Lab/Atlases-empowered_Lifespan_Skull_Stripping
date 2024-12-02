@@ -16,9 +16,9 @@ We have provided the Docker container for LifespanStrip. The container is pre-co
    
     Use the following command to pull the pre-built Docker image:
 
-```
-docker pull limeiw/lifespanstrip:v1
-```
+    ```
+    docker pull limeiw/lifespanstrip:v1
+    ```
 3. Prepare Your Data
 
     Ensure your input data adheres to the BIDS standard (if applicable). Alternatively, you can test it on the Lifespan_BIDS_dataset we provide.
@@ -27,33 +27,33 @@ docker pull limeiw/lifespanstrip:v1
 
 1. Basic Command
    
-Run the Docker container using the following command:
+    Run the Docker container using the following command:
 
-```
-docker run --gpus all -v /path/to/input:/app/data limeiw/lifespanstrip:v1 --bids_root filename_of_BIDS_dataset --subject_id id_of_subject --session_id id_of_session
-```
-***'-v /path/to/input'*** mounts the input data directory to the container's ***'-v /app/data'*** directory.
-***'--bids_root'*** specifies the BIDS dataset to be processed. 
-***'--subject_id'*** specifies a specific subject within the BIDS dataset to be processed (optional).
-***'--subject_id'*** specifies a specific session within the BIDS dataset to be processed (optional).
+    ```
+    docker run --gpus all -v /path/to/input:/app/data limeiw/lifespanstrip:v1 --bids_root filename_of_BIDS_dataset --subject_id id_of_subject --session_id id_of_session
+    ```
+    ***'-v /path/to/input'*** mounts the input data directory to the container's ***'-v /app/data'*** directory.
+    ***'--bids_root'*** specifies the BIDS dataset to be processed. 
+    ***'--subject_id'*** specifies a specific subject within the BIDS dataset to be processed (optional).
+    ***'--subject_id'*** specifies a specific session within the BIDS dataset to be processed (optional).
 
 2. Example Usage
    
-For example, using the Lifespan_BIDS_dataset we provided. The following command will process all the data that meets the criteria within the Lifespan_BIDS_dataset.
+    For example, using the Lifespan_BIDS_dataset we provided. The following command will process all the data that meets the criteria within the Lifespan_BIDS_dataset.
 
-```
-docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset
-```
+    ```
+    docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset
+    ```
 
-The following command will process a specific subject when the ***'--subject_id'*** is provided (e.g. A00032170).
-```
-docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset --subject_id A00032170
-```
+    The following command will process a specific subject when the ***'--subject_id'*** is provided (e.g. A00032170).
+    ```
+    docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset --subject_id A00032170
+    ```
 
-The following command will process a specific session when the --session_id (e.g. V02) is provided.
-```
-docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset --session_id V02
-```
+    The following command will process a specific session when the --session_id (e.g. V02) is provided.
+    ```
+    docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset --session_id V02
+    ```
 
 
 
