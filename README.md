@@ -32,7 +32,7 @@ We have provided the Docker container for LifespanStrip. The container is pre-co
     ```
     docker run --gpus all -v /path/to/input:/app/data limeiw/lifespanstrip:v1 --bids_root filename_of_BIDS_dataset --subject_id id_of_subject --session_id id_of_session
     ```
-    ***'-v /path/to/input'*** mounts the input data directory to the container's ***'-v /app/data'*** directory.
+    ***'-v /path/to/input'*** mounts the input data directory to the container's ***'/app/data'*** directory.
    
     ***'--bids_root'*** specifies the BIDS dataset to be processed.
    
