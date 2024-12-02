@@ -54,7 +54,7 @@ We have provided the Docker container for LifespanStrip. The container is pre-co
     docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset --subject_id A00032170
     ```
 
-    The following command will process a specific session when the --session_id (e.g. V02) is provided.
+    The following command will process a specific session when the ***'--session_id'*** (e.g. V02) is provided.
     ```
     docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset --session_id V02
     ```
