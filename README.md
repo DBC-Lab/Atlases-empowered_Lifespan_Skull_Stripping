@@ -33,11 +33,15 @@ We have provided the Docker container for LifespanStrip. The container is pre-co
     docker run --gpus all -v /path/to/input:/app/data limeiw/lifespanstrip:v1 --bids_root filename_of_BIDS_dataset --subject_id id_of_subject --session_id id_of_session
     ```
     ***'-v /path/to/input'*** mounts the input data directory to the container's ***'-v /app/data'*** directory.
-    ***'--bids_root'*** specifies the BIDS dataset to be processed. 
+   
+    ***'--bids_root'*** specifies the BIDS dataset to be processed.
+   
     ***'--subject_id'*** specifies a specific subject within the BIDS dataset to be processed (optional).
+   
     ***'--subject_id'*** specifies a specific session within the BIDS dataset to be processed (optional).
+   
 
-2. Example Usage
+3. Example Usage
    
     For example, using the Lifespan_BIDS_dataset we provided. The following command will process all the data that meets the criteria within the Lifespan_BIDS_dataset.
 
