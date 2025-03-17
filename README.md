@@ -30,7 +30,7 @@ We have provided the Docker container for LifespanStrip. The container is pre-co
     Run the Docker container using the following command:
 
     ```
-    docker run --gpus all -v /path/to/input:/app/data limeiw/lifespanstrip:v2.0.2 --bids_root filename_of_BIDS_dataset --subject_id id_of_subject --session_id id_of_session
+    docker run --gpus all -v /path/to/input:/app/data limeiw/lifespanstrip:v2.0.1 --bids_root filename_of_BIDS_dataset --subject_id id_of_subject --session_id id_of_session
     ```
     ***'-v /path/to/input'*** mounts the input data directory to the container's ***'/app/data'*** directory.
    
