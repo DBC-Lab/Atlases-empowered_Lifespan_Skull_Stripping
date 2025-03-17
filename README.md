@@ -1,7 +1,7 @@
 # Atlases-empowered_Lifespan_Skull_Stripping
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14047793.svg)](https://doi.org/10.5281/zenodo.14047793)
 
-Atlases-empowered lifespan skull stripping framework (LifespanStrip) is designed to perform skull stripping on lifespan MRIs from multiple sites by utilizing personalized prior information from atlases. We have expanded our model to perform skull stripping across various imaging sequences and modalities.
+The LifespanStrip framework leverages atlas-based prior information to enable skull stripping across lifespan MRIs from multiple sites. We have further enhanced the model to support skull stripping on both T1-weighted and T2-weighted MRIs.
 
 ### Getting Started: Containerized Execution (Docker)
 
@@ -17,11 +17,11 @@ We have provided the Docker container for LifespanStrip. The container is pre-co
     Use the following command to pull the pre-built Docker image:
 
     ```
-    docker pull limeiw/lifespanstrip:v1
+    docker pull limeiw/lifespanstrip:v2.0.1
     ```
 3. Prepare Your Data
 
-    Ensure your input data adheres to the BIDS standard (if applicable). Alternatively, you can test it on the Lifespan_BIDS_dataset we provide.
+    Ensure your input data adheres to the BIDS standard (if applicable). Alternatively, you can test it on the Testing_BIDS we provide.
 
 #### How to Run the Container
 
@@ -30,7 +30,7 @@ We have provided the Docker container for LifespanStrip. The container is pre-co
     Run the Docker container using the following command:
 
     ```
-    docker run --gpus all -v /path/to/input:/app/data limeiw/lifespanstrip:v1 --bids_root filename_of_BIDS_dataset --subject_id id_of_subject --session_id id_of_session
+    docker run --gpus all -v /path/to/input:/app/data limeiw/lifespanstrip:v2.0.2 --bids_root filename_of_BIDS_dataset --subject_id id_of_subject --session_id id_of_session
     ```
     ***'-v /path/to/input'*** mounts the input data directory to the container's ***'/app/data'*** directory.
    
@@ -43,20 +43,20 @@ We have provided the Docker container for LifespanStrip. The container is pre-co
 
 3. Example Usage
    
-    For example, using the Lifespan_BIDS_dataset we provided. The following command will process all the data that meets the criteria within the Lifespan_BIDS_dataset.
+    For example, using the Testing_BIDS we provided. The following command will process all the data that meets the criteria within the Testing_BIDS.
 
     ```
-    docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset
+    docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Testing_BIDS
     ```
 
-    The following command will process a specific subject when the ***'--subject_id'*** is provided (e.g. A00032170).
+    The following command will process a specific subject when the ***'--subject_id'*** is provided (e.g. 001).
     ```
-    docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset --subject_id A00032170
+    docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Testing_BIDS --subject_id A00032170
     ```
 
     The following command will process a specific session when the ***'--session_id'*** (e.g. V02) is provided.
     ```
-    docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Lifespan_BIDS_dataset --session_id V02
+    docker run --gpus all -v /home/user/data:/app/data limeiw/lifespanstrip:v1 --bids_root Testing_BIDS --session_id V02
     ```
 
 
