@@ -252,6 +252,19 @@ python3 main.py
 ```
 ---
 ## Citation
+If you find this work useful in your research, please cite:
+```
+@article{wang2025lifespan,
+  title     = {A lifespan-generalizable skull-stripping model for magnetic resonance images that leverages prior knowledge from brain atlases},
+  author    = {Wang, Limei and Sun, Yue and Seidlitz, Jakob and Bethlehem, Richard AI and Alexander-Bloch, Aaron and Dorfschmidt, Lena and Li, Gang and Elison, Jed T and Lin, Weili and Wang, Li},
+  journal   = {Nature Biomedical Engineering},
+  volume    = {9},
+  pages     = {700--715},
+  year      = {2025},
+  publisher = {Nature Publishing Group UK London}
+  doi = {https://doi.org/10.1038/s41551-024-01337-w}
+}
+```
 
 ## License information
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
